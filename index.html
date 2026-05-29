@@ -9,486 +9,251 @@
 <title>Habitus</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --indigo: #3D5A99;
-    --indigo-dark: #2d4478;
-    --indigo-light: #5a78b8;
-    --amber: #E8A838;
-    --amber-light: #f5c460;
-    --sage: #6BAA75;
-    --bg: #F4F3F0;
-    --surface: #FFFFFF;
-    --surface2: #EEECEA;
-    --text: #1a1a1a;
-    --text-muted: #888580;
-    --text-light: #b8b4ae;
-    --border: #E0DDD8;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --shadow: 0 2px 20px rgba(61,90,153,0.08);
-    --shadow-lg: 0 8px 40px rgba(61,90,153,0.15);
-  }
+:root {
+  --indigo: #3D5A99; --indigo-dark: #2d4478; --indigo-light: #5a78b8;
+  --amber: #E8A838; --amber-light: #f5c460; --sage: #6BAA75;
+  --bg: #F4F3F0; --surface: #FFFFFF; --surface2: #EEECEA;
+  --text: #1a1a1a; --text-muted: #888580; --text-light: #b8b4ae;
+  --border: #E0DDD8; --radius: 16px; --radius-sm: 10px;
+  --shadow: 0 2px 20px rgba(61,90,153,0.08);
+  --shadow-lg: 0 8px 40px rgba(61,90,153,0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; max-width: 430px; margin: 0 auto; overflow-x: hidden; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* SPLASH */
+#splash { position: fixed; inset: 0; background: var(--indigo); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.6s ease; }
+#splash h1 { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 300; color: white; letter-spacing: 0.08em; margin-top: 20px; }
+#splash p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 6px; letter-spacing: 0.1em; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+.splash-logo { animation: pulse 2s ease infinite; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    max-width: 430px;
-    margin: 0 auto;
-    position: relative;
-    overflow-x: hidden;
-  }
+/* HEADER */
+.app-header { padding: max(52px, calc(env(safe-area-inset-top) + 14px)) 24px 16px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+.header-top { display: flex; align-items: center; justify-content: space-between; }
+.header-logo { display: flex; align-items: center; gap: 10px; }
+.header-logo svg { width: 26px; height: 26px; }
+.header-logo span { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 400; color: var(--indigo); letter-spacing: 0.05em; }
 
-  /* SPLASH */
-  #splash {
-    position: fixed; inset: 0; background: var(--indigo);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    z-index: 1000; transition: opacity 0.6s ease;
-  }
-  #splash .logo-mark {
-    width: 72px; height: 72px; margin-bottom: 20px;
-    animation: pulse 2s ease infinite;
-  }
-  #splash h1 {
-    font-family: 'Fraunces', serif;
-    font-size: 2.4rem; font-weight: 300;
-    color: white; letter-spacing: 0.08em;
-  }
-  #splash p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 6px; letter-spacing: 0.1em; }
-  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+/* NAV */
+.nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: var(--surface); border-top: 1px solid var(--border); display: flex; padding: 8px 0 24px; z-index: 100; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 0; cursor: pointer; color: var(--text-light); transition: color 0.2s; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.03em; }
+.nav-item.active { color: var(--indigo); }
+.nav-item svg { width: 22px; height: 22px; }
 
-  /* HEADER */
-  .app-header {
-    padding: max(56px, calc(env(safe-area-inset-top) + 16px)) 24px 20px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 100;
-  }
-  .header-top { display: flex; align-items: center; justify-content: space-between; }
-  .header-logo { display: flex; align-items: center; gap: 10px; }
-  .header-logo svg { width: 28px; height: 28px; }
-  .header-logo span {
-    font-family: 'Fraunces', serif; font-size: 1.3rem;
-    font-weight: 400; color: var(--indigo); letter-spacing: 0.05em;
-  }
-  .header-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+/* VIEWS */
+.view { display: none; padding: 16px 16px 100px; animation: fadeIn 0.2s ease; }
+.view.active { display: block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
 
-  /* NAV */
-  .nav {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 100%; max-width: 430px;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    display: flex; padding: 8px 0 24px;
-    z-index: 100;
-  }
-  .nav-item {
-    flex: 1; display: flex; flex-direction: column; align-items: center;
-    gap: 4px; padding: 8px 0; cursor: pointer;
-    color: var(--text-light); transition: color 0.2s;
-    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.03em;
-  }
-  .nav-item.active { color: var(--indigo); }
-  .nav-item svg { width: 22px; height: 22px; }
+/* TODAY SUMMARY */
+.today-summary { background: var(--indigo); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 20px; color: white; position: relative; overflow: hidden; }
+.today-summary::before { content:''; position:absolute; top:-30px; right:-30px; width:110px; height:110px; border-radius:50%; background:rgba(255,255,255,0.06); }
+.today-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+.today-pct { font-family: 'Fraunces', serif; font-size: 3.2rem; font-weight: 300; line-height: 1; }
+.today-sub { font-size: 0.82rem; opacity: 0.65; margin-top: 5px; }
+.today-progress { margin-top: 14px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; }
+.today-bar { height: 100%; background: var(--amber); border-radius: 2px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
 
-  /* VIEWS */
-  .view { display: none; padding: 20px 20px 100px; animation: fadeIn 0.25s ease; }
-  .view.active { display: block; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.section-title { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; padding-left: 2px; }
 
-  /* TODAY VIEW */
-  .today-summary {
-    background: var(--indigo);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin-bottom: 24px;
-    color: white;
-    position: relative; overflow: hidden;
-  }
-  .today-summary::before {
-    content: ''; position: absolute; top: -30px; right: -30px;
-    width: 120px; height: 120px; border-radius: 50%;
-    background: rgba(255,255,255,0.06);
-  }
-  .today-summary::after {
-    content: ''; position: absolute; bottom: -20px; left: 20px;
-    width: 80px; height: 80px; border-radius: 50%;
-    background: rgba(255,255,255,0.04);
-  }
-  .today-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65; margin-bottom: 8px; }
-  .today-pct { font-family: 'Fraunces', serif; font-size: 3.5rem; font-weight: 300; line-height: 1; }
-  .today-sub { font-size: 0.85rem; opacity: 0.7; margin-top: 6px; }
-  .today-progress {
-    margin-top: 16px; height: 4px; background: rgba(255,255,255,0.2);
-    border-radius: 2px; overflow: hidden;
-  }
-  .today-progress-bar {
-    height: 100%; background: var(--amber); border-radius: 2px;
-    transition: width 0.6s cubic-bezier(.4,0,.2,1);
-  }
+/* HABIT CARD */
+.habit-card { background: var(--surface); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); cursor: pointer; transition: transform 0.15s; }
+.habit-card:active { transform: scale(0.98); }
+.habit-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.habit-check.done { background: var(--sage); border-color: var(--sage); }
+.habit-check svg { display: none; width: 13px; height: 13px; color: white; }
+.habit-check.done svg { display: block; }
+.habit-info { flex: 1; min-width: 0; }
+.habit-name { font-size: 0.92rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.habit-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; display: flex; align-items: center; gap: 6px; }
+.habit-card.paused { opacity: 0.4; }
 
-  .section-title {
-    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 12px; padding-left: 2px;
-  }
+/* FREQUENCY BADGE */
+.freq-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 0.65rem; padding: 2px 7px; border-radius: 20px; font-weight: 500; flex-shrink: 0; }
+.freq-badge.frequent { background: rgba(61,90,153,0.1); color: var(--indigo); }
+.freq-badge.once { background: rgba(107,170,117,0.12); color: #4a8a58; }
+.freq-badge.occasional { background: rgba(232,168,56,0.15); color: #b07d10; }
 
-  .habit-card {
-    background: var(--surface); border-radius: var(--radius-sm);
-    padding: 16px; margin-bottom: 10px;
-    display: flex; align-items: center; gap: 14px;
-    box-shadow: var(--shadow); transition: transform 0.15s, box-shadow 0.15s;
-    cursor: pointer;
-  }
-  .habit-card:active { transform: scale(0.98); }
-  .habit-check {
-    width: 28px; height: 28px; border-radius: 50%;
-    border: 2px solid var(--border); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; cursor: pointer;
-  }
-  .habit-check.done { background: var(--sage); border-color: var(--sage); }
-  .habit-check.done svg { display: block; }
-  .habit-check svg { display: none; width: 14px; height: 14px; color: white; }
-  .habit-info { flex: 1; min-width: 0; }
-  .habit-name { font-size: 0.95rem; font-weight: 500; }
-  .habit-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
-  .habit-cat-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-  }
-  .habit-card.paused { opacity: 0.45; }
-  .paused-badge {
-    font-size: 0.65rem; background: var(--surface2); color: var(--text-muted);
-    padding: 2px 8px; border-radius: 20px; letter-spacing: 0.05em;
-  }
+.cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
-  .empty-state {
-    text-align: center; padding: 48px 24px;
-    color: var(--text-muted);
-  }
-  .empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; opacity: 0.3; }
-  .empty-state h3 { font-family: 'Fraunces', serif; font-weight: 300; font-size: 1.2rem; color: var(--text); margin-bottom: 8px; }
-  .empty-state p { font-size: 0.85rem; line-height: 1.6; }
+/* EMPTY STATE */
+.empty-state { text-align: center; padding: 44px 20px; color: var(--text-muted); }
+.empty-state svg { width: 44px; height: 44px; margin-bottom: 14px; opacity: 0.25; }
+.empty-state h3 { font-family: 'Fraunces', serif; font-weight: 300; font-size: 1.15rem; color: var(--text); margin-bottom: 6px; }
+.empty-state p { font-size: 0.83rem; line-height: 1.6; }
 
-  /* FAB */
-  .fab {
-    position: fixed; bottom: 90px; right: 24px;
-    width: 52px; height: 52px; border-radius: 50%;
-    background: var(--indigo); color: white; border: none;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(61,90,153,0.4);
-    cursor: pointer; z-index: 99; font-size: 1.4rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .fab:active { transform: scale(0.93); }
-  .fab svg { width: 22px; height: 22px; }
+/* FAB */
+.fab { position: fixed; bottom: 88px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--indigo); color: white; border: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(61,90,153,0.4); cursor: pointer; z-index: 99; transition: transform 0.2s; }
+.fab:active { transform: scale(0.92); }
+.fab svg { width: 22px; height: 22px; }
 
-  /* CALENDAR VIEW */
-  .cal-filter {
-    display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto;
-    padding-bottom: 4px; -webkit-overflow-scrolling: touch;
-  }
-  .cal-filter::-webkit-scrollbar { display: none; }
-  .filter-chip {
-    flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
-    font-size: 0.78rem; font-weight: 500; cursor: pointer;
-    border: 1.5px solid var(--border); background: var(--surface);
-    color: var(--text-muted); transition: all 0.2s; white-space: nowrap;
-  }
-  .filter-chip.active {
-    background: var(--indigo); border-color: var(--indigo);
-    color: white;
-  }
+/* CALENDAR */
+.cal-filter { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; align-items: center; }
+.cal-filter::-webkit-scrollbar { display: none; }
+.filter-chip { flex-shrink: 0; padding: 5px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); background: var(--surface); color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
+.filter-chip.active { background: var(--indigo); border-color: var(--indigo); color: white; }
+.filter-divider { flex-shrink: 0; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); white-space: nowrap; padding: 0 2px; }
 
-  .cal-month-nav {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 16px;
-  }
-  .cal-month-title {
-    font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 400;
-  }
-  .cal-nav-btn {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: var(--surface); border: 1px solid var(--border);
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    color: var(--text); transition: background 0.2s;
-  }
-  .cal-nav-btn:active { background: var(--surface2); }
+.cal-month-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-month-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 400; }
+.cal-nav-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text); }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; margin-bottom: 6px; }
+.cal-weekday { font-size: 0.65rem; color: var(--text-muted); padding: 4px 0; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.cal-day { aspect-ratio: 1; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; cursor: pointer; position: relative; transition: transform 0.15s; }
+.cal-day:active { transform: scale(0.88); }
+.cal-day.empty { cursor: default; }
+.cal-day.today { font-weight: 700; }
+.cal-day.today::after { content:''; position:absolute; bottom:2px; width:3px; height:3px; border-radius:50%; background:var(--indigo); }
+.cal-day.future { color: var(--text-light); }
+.cal-day-num { position: relative; z-index: 1; }
 
-  .cal-weekdays {
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    text-align: center; margin-bottom: 8px;
-  }
-  .cal-weekday { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.05em; padding: 4px 0; }
+/* MODALS */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--surface); border-radius: 22px 22px 0 0; padding: 0 0 36px; width: 100%; max-height: 88vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.3s cubic-bezier(.4,0,.2,1); }
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-handle { width: 34px; height: 4px; background: var(--border); border-radius: 2px; margin: 10px auto 0; }
+.modal-header { padding: 18px 22px 14px; border-bottom: 1px solid var(--border); }
+.modal-title { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 400; }
+.modal-subtitle { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+.modal-body { padding: 14px 22px; }
 
-  .cal-grid {
-    display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
-  }
-  .cal-day {
-    aspect-ratio: 1; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; cursor: pointer; position: relative;
-    transition: transform 0.15s;
-  }
-  .cal-day:active { transform: scale(0.9); }
-  .cal-day.empty { cursor: default; }
-  .cal-day.today { font-weight: 700; }
-  .cal-day.today::after {
-    content: ''; position: absolute; bottom: 3px;
-    width: 4px; height: 4px; border-radius: 50%;
-    background: var(--indigo);
-  }
-  .cal-day.future { color: var(--text-light); }
-  .cal-day-num { position: relative; z-index: 1; }
+.modal-habit-row { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+.modal-habit-row:last-child { border-bottom: none; }
+.status-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.done { background: var(--sage); }
+.status-dot.missed { background: var(--border); }
+.status-dot.future { background: var(--amber-light); }
 
-  /* DAY DETAIL MODAL */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.4);
-    z-index: 200; display: flex; align-items: flex-end;
-    opacity: 0; pointer-events: none; transition: opacity 0.25s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal {
-    background: var(--surface); border-radius: 24px 24px 0 0;
-    padding: 0 0 40px; width: 100%; max-height: 80vh;
-    overflow-y: auto; transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
-  }
-  .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-handle {
-    width: 36px; height: 4px; background: var(--border);
-    border-radius: 2px; margin: 12px auto 0;
-  }
-  .modal-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
-  .modal-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 400; }
-  .modal-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
-  .modal-body { padding: 16px 24px; }
-  .modal-habit-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 0; border-bottom: 1px solid var(--border);
-  }
-  .modal-habit-row:last-child { border-bottom: none; }
-  .status-dot {
-    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-  }
-  .status-dot.done { background: var(--sage); }
-  .status-dot.missed { background: var(--border); }
-  .status-dot.future { background: var(--amber-light); }
-  .modal-habit-name { flex: 1; font-size: 0.9rem; }
-  .modal-habit-cat { font-size: 0.72rem; color: var(--text-muted); }
+/* ANALYSIS */
+.stats-card { background: var(--surface); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 10px; box-shadow: var(--shadow); }
+.stats-card-title { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.stats-big { font-family: 'Fraunces', serif; font-size: 2.6rem; font-weight: 300; color: var(--indigo); line-height: 1; }
+.stats-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+.stats-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.stats-bar-label { font-size: 0.8rem; min-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stats-bar-track { flex: 1; height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+.stats-bar-fill { height: 100%; border-radius: 3px; background: var(--indigo); transition: width 0.8s cubic-bezier(.4,0,.2,1); }
+.stats-bar-pct { font-size: 0.76rem; color: var(--text-muted); min-width: 34px; text-align: right; }
+.period-selector { display: flex; gap: 5px; margin-bottom: 16px; }
+.period-btn { flex: 1; padding: 8px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface); font-size: 0.76rem; font-weight: 500; cursor: pointer; color: var(--text-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.period-btn.active { background: var(--indigo); border-color: var(--indigo); color: white; }
 
-  /* ANALYSIS VIEW */
-  .stats-card {
-    background: var(--surface); border-radius: var(--radius-sm);
-    padding: 20px; margin-bottom: 12px; box-shadow: var(--shadow);
-  }
-  .stats-card-title { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
-  .stats-big { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 300; color: var(--indigo); line-height: 1; }
-  .stats-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
-  .stats-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .stats-bar-label { font-size: 0.82rem; min-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .stats-bar-track { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
-  .stats-bar-fill { height: 100%; border-radius: 3px; background: var(--indigo); transition: width 0.8s cubic-bezier(.4,0,.2,1); }
-  .stats-bar-pct { font-size: 0.78rem; color: var(--text-muted); min-width: 36px; text-align: right; }
+/* ACHIEVEMENTS */
+.achievement-card { background: linear-gradient(135deg, var(--indigo), var(--indigo-light)); border-radius: var(--radius-sm); padding: 14px 18px; margin-bottom: 8px; color: white; display: flex; align-items: center; gap: 12px; }
+.achievement-icon { font-size: 1.6rem; }
 
-  .period-selector {
-    display: flex; gap: 6px; margin-bottom: 20px;
-  }
-  .period-btn {
-    flex: 1; padding: 8px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); background: var(--surface);
-    font-size: 0.78rem; font-weight: 500; cursor: pointer;
-    color: var(--text-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-  }
-  .period-btn.active { background: var(--indigo); border-color: var(--indigo); color: white; }
+/* FORMS */
+.form-section { margin-bottom: 20px; }
+.form-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 7px; display: block; }
+.input-optional { font-size: 0.68rem; color: var(--text-light); margin-left: 5px; font-style: italic; letter-spacing: 0; text-transform: none; }
+.form-input { width: 100%; padding: 13px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface); font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--text); outline: none; transition: border-color 0.2s; }
+.form-input:focus { border-color: var(--indigo); }
+.form-input::placeholder { color: var(--text-light); }
+textarea.form-input { resize: none; min-height: 72px; }
+.form-row { display: flex; gap: 8px; }
+.form-row .form-input { flex: 1; }
 
-  /* ACHIEVEMENTS */
-  .achievement-card {
-    background: linear-gradient(135deg, var(--indigo), var(--indigo-light));
-    border-radius: var(--radius-sm); padding: 16px 20px;
-    margin-bottom: 10px; color: white; display: flex; align-items: center; gap: 14px;
-  }
-  .achievement-icon { font-size: 1.8rem; }
-  .achievement-name { font-weight: 500; font-size: 0.9rem; }
-  .achievement-date { font-size: 0.75rem; opacity: 0.65; margin-top: 2px; }
+/* FREQUENCY SELECTOR */
+.freq-selector { display: flex; gap: 6px; margin-bottom: 16px; }
+.freq-btn { flex: 1; padding: 10px 6px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface); font-size: 0.78rem; font-weight: 500; cursor: pointer; color: var(--text-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.freq-btn.active { background: var(--indigo); border-color: var(--indigo); color: white; }
+.freq-btn span { font-size: 1rem; }
 
-  /* FORM VIEW */
-  .form-section { margin-bottom: 24px; }
-  .form-label {
-    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 8px; display: block;
-  }
-  .form-input {
-    width: 100%; padding: 14px 16px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); background: var(--surface);
-    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--text);
-    outline: none; transition: border-color 0.2s;
-  }
-  .form-input:focus { border-color: var(--indigo); }
-  .form-input::placeholder { color: var(--text-light); }
-  textarea.form-input { resize: none; min-height: 80px; }
+.days-selector { display: flex; gap: 6px; flex-wrap: wrap; }
+.day-btn { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--surface); font-size: 0.75rem; font-weight: 500; cursor: pointer; color: var(--text-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.day-btn.selected { background: var(--indigo); border-color: var(--indigo); color: white; }
 
-  .days-selector { display: flex; gap: 8px; flex-wrap: wrap; }
-  .day-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 1.5px solid var(--border); background: var(--surface);
-    font-size: 0.78rem; font-weight: 500; cursor: pointer;
-    color: var(--text-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-  }
-  .day-btn.selected { background: var(--indigo); border-color: var(--indigo); color: white; }
+/* MINI CALENDAR for occasional/once */
+.mini-cal { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px; }
+.mini-cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.mini-cal-title { font-size: 0.85rem; font-weight: 500; }
+.mini-cal-nav { width: 28px; height: 28px; border-radius: 50%; background: var(--surface2); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+.mini-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+.mini-cal-day { aspect-ratio: 1; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; cursor: pointer; transition: all 0.15s; color: var(--text-muted); }
+.mini-cal-day.other-month { color: var(--text-light); }
+.mini-cal-day.today-cal { font-weight: 700; color: var(--indigo); }
+.mini-cal-day.selected-cal { background: var(--indigo); color: white; border-radius: 50%; }
+.mini-cal-day.past { opacity: 0.4; cursor: default; }
+.mini-cal-weekday { font-size: 0.6rem; color: var(--text-light); text-align: center; padding: 2px 0; }
 
-  .cat-selector { display: flex; gap: 8px; flex-wrap: wrap; }
-  .cat-btn {
-    padding: 8px 14px; border-radius: 20px;
-    border: 1.5px solid var(--border); background: var(--surface);
-    font-size: 0.8rem; cursor: pointer; color: var(--text-muted);
-    transition: all 0.2s; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 6px;
-  }
-  .cat-btn.selected { background: var(--indigo); border-color: var(--indigo); color: white; }
-  .cat-btn .dot { width: 8px; height: 8px; border-radius: 50%; }
+.selected-dates-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.date-chip { background: rgba(61,90,153,0.1); color: var(--indigo); font-size: 0.72rem; padding: 3px 9px; border-radius: 20px; display: flex; align-items: center; gap: 4px; }
+.date-chip-remove { cursor: pointer; opacity: 0.6; font-size: 0.8rem; line-height: 1; }
 
-  .form-row { display: flex; gap: 10px; }
-  .form-row .form-input { flex: 1; }
+/* TOGGLES */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; background: var(--surface); border-radius: var(--radius-sm); border: 1.5px solid var(--border); margin-bottom: 8px; cursor: pointer; }
+.toggle-label { font-size: 0.88rem; }
+.toggle-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+.toggle { width: 42px; height: 24px; border-radius: 12px; background: var(--border); position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+.toggle.on { background: var(--indigo); }
+.toggle::after { content:''; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%; background:white; transition:transform 0.2s; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+.toggle.on::after { transform: translateX(18px); }
 
-  .toggle-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 16px; background: var(--surface); border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); margin-bottom: 10px;
-  }
-  .toggle-label { font-size: 0.9rem; }
-  .toggle-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
-  .toggle {
-    width: 44px; height: 26px; border-radius: 13px;
-    background: var(--border); position: relative; cursor: pointer;
-    transition: background 0.2s; flex-shrink: 0;
-  }
-  .toggle.on { background: var(--indigo); }
-  .toggle::after {
-    content: ''; position: absolute; top: 3px; left: 3px;
-    width: 20px; height: 20px; border-radius: 50%;
-    background: white; transition: transform 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-  .toggle.on::after { transform: translateX(18px); }
+/* BUTTONS */
+.btn-primary { width: 100%; padding: 15px; border-radius: var(--radius-sm); background: var(--indigo); color: white; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
+.btn-primary:active { opacity: 0.85; }
+.btn-secondary { width: 100%; padding: 13px; border-radius: var(--radius-sm); background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; cursor: pointer; margin-top: 8px; }
+.btn-danger { width: 100%; padding: 13px; border-radius: var(--radius-sm); background: transparent; color: #e05555; border: 1.5px solid #f0c4c4; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; cursor: pointer; margin-top: 8px; }
 
-  .btn-primary {
-    width: 100%; padding: 16px; border-radius: var(--radius-sm);
-    background: var(--indigo); color: white; border: none;
-    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
-    cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.02em;
-  }
-  .btn-primary:active { opacity: 0.85; }
-  .btn-secondary {
-    width: 100%; padding: 14px; border-radius: var(--radius-sm);
-    background: transparent; color: var(--text-muted); border: 1.5px solid var(--border);
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer;
-    margin-top: 10px; transition: background 0.2s;
-  }
-  .btn-secondary:active { background: var(--surface2); }
-  .btn-danger {
-    width: 100%; padding: 14px; border-radius: var(--radius-sm);
-    background: transparent; color: #e05555; border: 1.5px solid #f0c4c4;
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer;
-    margin-top: 10px; transition: background 0.2s;
-  }
+/* HABIT ACTIONS */
+.habit-action-btn { display: flex; align-items: center; gap: 12px; padding: 15px 22px; border-bottom: 1px solid var(--border); cursor: pointer; color: var(--text); font-size: 0.88rem; transition: background 0.15s; }
+.habit-action-btn:active { background: var(--surface2); }
+.habit-action-btn svg { width: 17px; height: 17px; color: var(--text-muted); }
+.habit-action-btn.danger { color: #e05555; }
+.habit-action-btn.danger svg { color: #e05555; }
 
-  /* HABIT DETAIL MODAL */
-  .habit-action-btn {
-    display: flex; align-items: center; gap: 12px;
-    padding: 16px 24px; border-bottom: 1px solid var(--border);
-    cursor: pointer; color: var(--text); font-size: 0.9rem;
-    transition: background 0.15s;
-  }
-  .habit-action-btn:active { background: var(--surface2); }
-  .habit-action-btn svg { width: 18px; height: 18px; color: var(--text-muted); }
-  .habit-action-btn.danger { color: #e05555; }
-  .habit-action-btn.danger svg { color: #e05555; }
+/* GOAL */
+.goal-progress-bar { height: 7px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin: 7px 0; }
+.goal-progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--indigo), var(--amber)); transition: width 0.8s cubic-bezier(.4,0,.2,1); }
 
-  /* GOAL MODAL */
-  .goal-progress-bar {
-    height: 8px; background: var(--surface2); border-radius: 4px;
-    overflow: hidden; margin: 8px 0;
-  }
-  .goal-progress-fill {
-    height: 100%; border-radius: 4px;
-    background: linear-gradient(90deg, var(--indigo), var(--amber));
-    transition: width 0.8s cubic-bezier(.4,0,.2,1);
-  }
+/* CELEBRATION */
+.celebration-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.celebration-overlay.open { opacity: 1; pointer-events: all; }
+.celebration-card { background: var(--surface); border-radius: 22px; padding: 36px 28px; text-align: center; max-width: 310px; margin: 20px; transform: scale(0.85); transition: transform 0.3s cubic-bezier(.4,0,.2,1); }
+.celebration-overlay.open .celebration-card { transform: scale(1); }
 
-  /* CELEBRATION */
-  .celebration-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-    z-index: 300; display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-  .celebration-overlay.open { opacity: 1; pointer-events: all; }
-  .celebration-card {
-    background: var(--surface); border-radius: 24px; padding: 40px 32px;
-    text-align: center; max-width: 320px; margin: 24px;
-    transform: scale(0.8); transition: transform 0.3s cubic-bezier(.4,0,.2,1);
-  }
-  .celebration-overlay.open .celebration-card { transform: scale(1); }
-  .celebration-emoji { font-size: 3rem; margin-bottom: 16px; }
-  .celebration-title { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 8px; }
-  .celebration-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+/* TOAST */
+.toast { position: fixed; top: 76px; left: 50%; transform: translateX(-50%) translateY(-16px); background: var(--text); color: white; padding: 10px 18px; border-radius: 20px; font-size: 0.83rem; z-index: 400; opacity: 0; transition: all 0.3s; white-space: nowrap; box-shadow: var(--shadow-lg); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ONBOARDING */
-  #onboarding {
-    position: fixed; inset: 0; background: var(--bg);
-    z-index: 500; display: flex; flex-direction: column;
-    padding: 60px 28px 40px; overflow-y: auto;
-  }
-  .onboarding-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 48px; }
-  .onboarding-logo svg { width: 32px; height: 32px; }
-  .onboarding-logo span { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 400; color: var(--indigo); letter-spacing: 0.05em; }
-  .onboarding-title { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 300; line-height: 1.3; margin-bottom: 12px; }
-  .onboarding-sub { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 40px; }
-  .onboarding-skip { color: var(--text-muted); font-size: 0.85rem; text-align: center; cursor: pointer; margin-top: 16px; padding: 8px; }
-  .onboarding-skip:active { opacity: 0.6; }
+/* ONBOARDING */
+#onboarding { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: flex; flex-direction: column; padding: 60px 26px 36px; overflow-y: auto; }
+.ob-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 44px; }
+.ob-logo svg { width: 30px; height: 30px; }
+.ob-logo span { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 400; color: var(--indigo); }
+.ob-title { font-family: 'Fraunces', serif; font-size: 1.9rem; font-weight: 300; line-height: 1.3; margin-bottom: 10px; }
+.ob-sub { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 36px; }
+.ob-skip { color: var(--text-muted); font-size: 0.83rem; text-align: center; cursor: pointer; margin-top: 14px; padding: 8px; }
 
-  /* CATEGORY MANAGE */
-  .cat-manage-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 16px; background: var(--surface);
-    border-radius: var(--radius-sm); margin-bottom: 8px;
-    border: 1.5px solid var(--border);
-  }
-  .cat-color-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
-  .cat-manage-name { flex: 1; font-size: 0.9rem; }
-  .cat-delete-btn { color: var(--text-light); cursor: pointer; padding: 4px; }
+/* CAT SELECTOR */
+.cat-selector { display: flex; gap: 7px; flex-wrap: wrap; }
+.cat-btn { padding: 7px 13px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--surface); font-size: 0.78rem; cursor: pointer; color: var(--text-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 5px; }
+.cat-btn.selected { background: var(--indigo); border-color: var(--indigo); color: white; }
+.cat-btn .dot { width: 7px; height: 7px; border-radius: 50%; }
 
-  /* NOTIFICATIONS TOAST */
-  .toast {
-    position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px);
-    background: var(--text); color: white; padding: 12px 20px;
-    border-radius: 20px; font-size: 0.85rem; z-index: 400;
-    opacity: 0; transition: all 0.3s; white-space: nowrap;
-    box-shadow: var(--shadow-lg);
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* CAT MANAGE */
+.cat-manage-item { display: flex; align-items: center; gap: 10px; padding: 13px 14px; background: var(--surface); border-radius: var(--radius-sm); margin-bottom: 7px; border: 1.5px solid var(--border); }
+.cat-color-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
+.cat-manage-name { flex: 1; font-size: 0.88rem; }
+.color-swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.color-swatch { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; transition: transform 0.15s; border: 2px solid transparent; }
+.color-swatch.selected { transform: scale(1.25); border-color: var(--text); }
 
-  /* COLOR SWATCHES */
-  .color-swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-  .color-swatch {
-    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-    transition: transform 0.15s; border: 2px solid transparent;
-  }
-  .color-swatch.selected { transform: scale(1.2); border-color: var(--text); }
-
-  .input-optional { font-size: 0.7rem; color: var(--text-light); margin-left: 6px; font-style: italic; letter-spacing: 0; text-transform: none; }
+.paused-badge { font-size: 0.62rem; background: var(--surface2); color: var(--text-muted); padding: 2px 7px; border-radius: 20px; }
 </style>
 </head>
 <body>
 
 <!-- SPLASH -->
 <div id="splash">
-  <svg class="logo-mark" viewBox="0 0 72 72" fill="none">
-    <circle cx="36" cy="36" r="36" fill="rgba(255,255,255,0.08)"/>
-    <path d="M36 54 C36 54 20 44 20 30 C20 21.16 27.16 14 36 14 C44.84 14 52 21.16 52 30 C52 44 36 54 36 54Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
-    <circle cx="36" cy="30" r="6" fill="white" opacity="0.9"/>
-    <line x1="36" y1="36" x2="36" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <svg class="splash-logo" width="68" height="68" viewBox="0 0 68 68" fill="none">
+    <circle cx="34" cy="34" r="34" fill="rgba(255,255,255,0.08)"/>
+    <path d="M34 52C34 52 18 42 18 28C18 19.16 25.16 12 34 12C42.84 12 50 19.16 50 28C50 42 34 52 34 52Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+    <circle cx="34" cy="28" r="5" fill="white" opacity="0.9"/>
+    <line x1="34" y1="33" x2="34" y2="48" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="3 3"/>
   </svg>
   <h1>Habitus</h1>
   <p>CRECÉ CADA DÍA</p>
@@ -496,89 +261,65 @@
 
 <!-- ONBOARDING -->
 <div id="onboarding" style="display:none">
-  <div class="onboarding-logo">
-    <svg viewBox="0 0 32 32" fill="none">
-      <path d="M16 28 C16 28 6 22 6 13 C6 8.03 10.03 4 16 4 C21.97 4 26 8.03 26 13 C26 22 16 28 16 28Z" fill="var(--indigo)" opacity="0.15"/>
-      <path d="M16 28 C16 28 6 22 6 13 C6 8.03 10.03 4 16 4 C21.97 4 26 8.03 26 13 C26 22 16 28 16 28Z" stroke="var(--indigo)" stroke-width="1.5" fill="none"/>
-      <circle cx="16" cy="13" r="3" fill="var(--indigo)"/>
-    </svg>
+  <div class="ob-logo">
+    <svg viewBox="0 0 32 32" fill="none"><path d="M16 28C16 28 6 22 6 13C6 8.03 10.03 4 16 4C21.97 4 26 8.03 26 13C26 22 16 28 16 28Z" fill="var(--indigo)" opacity="0.15"/><path d="M16 28C16 28 6 22 6 13C6 8.03 10.03 4 16 4C21.97 4 26 8.03 26 13C26 22 16 28 16 28Z" stroke="var(--indigo)" stroke-width="1.5" fill="none"/><circle cx="16" cy="13" r="3" fill="var(--indigo)"/></svg>
     <span>Habitus</span>
   </div>
-  <h1 class="onboarding-title">Bienvenido a<br>tu espacio de<br>crecimiento</h1>
-  <p class="onboarding-sub">Registrá tus hábitos, medí tu disciplina y construí la versión de vos que querés ser — un día a la vez.</p>
-
+  <h1 class="ob-title">Bienvenido a<br>tu espacio de<br>crecimiento</h1>
+  <p class="ob-sub">Hábitos recurrentes, tareas puntuales, compromisos ocasionales. Todo en un lugar.</p>
   <div class="form-section">
-    <label class="form-label">¿Cuál es tu primera categoría?</label>
+    <label class="form-label">Elegí tus categorías iniciales</label>
     <div class="cat-selector" id="ob-cats">
-      <div class="cat-btn selected" data-cat="Salud">
-        <div class="dot" style="background:#6BAA75"></div> Salud
-      </div>
-      <div class="cat-btn" data-cat="Casa">
-        <div class="dot" style="background:#E8A838"></div> Casa
-      </div>
-      <div class="cat-btn" data-cat="Aprendizaje">
-        <div class="dot" style="background:#3D5A99"></div> Aprendizaje
-      </div>
-      <div class="cat-btn" data-cat="Personal">
-        <div class="dot" style="background:#B07EB8"></div> Personal
-      </div>
+      <div class="cat-btn selected" data-cat="Salud"><div class="dot" style="background:#6BAA75"></div>Salud</div>
+      <div class="cat-btn" data-cat="Casa"><div class="dot" style="background:#E8A838"></div>Casa</div>
+      <div class="cat-btn" data-cat="Aprendizaje"><div class="dot" style="background:#3D5A99"></div>Aprendizaje</div>
+      <div class="cat-btn" data-cat="Personal"><div class="dot" style="background:#B07EB8"></div>Personal</div>
     </div>
   </div>
-
   <div style="margin-top:auto">
     <button class="btn-primary" onclick="finishOnboarding()">Empezar →</button>
-    <div class="onboarding-skip" onclick="finishOnboarding()">Saltar por ahora</div>
+    <div class="ob-skip" onclick="finishOnboarding()">Saltar por ahora</div>
   </div>
 </div>
 
-<!-- APP HEADER -->
+<!-- HEADER -->
 <div class="app-header" id="appHeader" style="display:none">
   <div class="header-top">
     <div class="header-logo">
-      <svg viewBox="0 0 32 32" fill="none">
-        <path d="M16 28 C16 28 6 22 6 13 C6 8.03 10.03 4 16 4 C21.97 4 26 8.03 26 13 C26 22 16 28 16 28Z" fill="var(--indigo)" opacity="0.15"/>
-        <path d="M16 28 C16 28 6 22 6 13 C6 8.03 10.03 4 16 4 C21.97 4 26 8.03 26 13 C26 22 16 28 16 28Z" stroke="var(--indigo)" stroke-width="1.5" fill="none"/>
-        <circle cx="16" cy="13" r="3" fill="var(--indigo)"/>
-      </svg>
+      <svg viewBox="0 0 32 32" fill="none"><path d="M16 28C16 28 6 22 6 13C6 8.03 10.03 4 16 4C21.97 4 26 8.03 26 13C26 22 16 28 16 28Z" fill="var(--indigo)" opacity="0.15"/><path d="M16 28C16 28 6 22 6 13C6 8.03 10.03 4 16 4C21.97 4 26 8.03 26 13C26 22 16 28 16 28Z" stroke="var(--indigo)" stroke-width="1.5" fill="none"/><circle cx="16" cy="13" r="3" fill="var(--indigo)"/></svg>
       <span>Habitus</span>
     </div>
-    <div style="font-size:0.78rem;color:var(--text-muted)" id="headerDateStr"></div>
+    <div style="font-size:0.76rem;color:var(--text-muted)" id="headerDate"></div>
   </div>
 </div>
 
 <!-- VIEWS -->
-<div id="view-today" class="view active" style="display:none">
+<div id="view-today" class="view">
   <div class="today-summary">
     <div class="today-label">Hoy</div>
     <div class="today-pct" id="todayPct">—</div>
-    <div class="today-sub" id="todaySub">Sin hábitos para hoy</div>
-    <div class="today-progress"><div class="today-progress-bar" id="todayBar" style="width:0%"></div></div>
+    <div class="today-sub" id="todaySub">Sin ítems para hoy</div>
+    <div class="today-progress"><div class="today-bar" id="todayBar" style="width:0%"></div></div>
   </div>
-  <div class="section-title">Hábitos de hoy</div>
-  <div id="todayHabits"></div>
+  <div class="section-title">Agenda de hoy</div>
+  <div id="todayList"></div>
 </div>
 
-<div id="view-calendar" class="view" style="display:none">
+<div id="view-calendar" class="view">
   <div class="cal-filter" id="calFilter"></div>
   <div class="cal-month-nav">
-    <button class="cal-nav-btn" onclick="changeMonth(-1)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <div class="cal-month-title" id="calMonthTitle"></div>
-    <button class="cal-nav-btn" onclick="changeMonth(1)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+    <button class="cal-nav-btn" onclick="changeMonth(-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="cal-month-title" id="calTitle"></div>
+    <button class="cal-nav-btn" onclick="changeMonth(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
   <div class="cal-weekdays">
-    <div class="cal-weekday">D</div><div class="cal-weekday">L</div>
-    <div class="cal-weekday">M</div><div class="cal-weekday">X</div>
-    <div class="cal-weekday">J</div><div class="cal-weekday">V</div>
-    <div class="cal-weekday">S</div>
+    <div class="cal-weekday">D</div><div class="cal-weekday">L</div><div class="cal-weekday">M</div>
+    <div class="cal-weekday">X</div><div class="cal-weekday">J</div><div class="cal-weekday">V</div><div class="cal-weekday">S</div>
   </div>
   <div class="cal-grid" id="calGrid"></div>
 </div>
 
-<div id="view-analysis" class="view" style="display:none">
+<div id="view-analysis" class="view">
   <div class="period-selector">
     <button class="period-btn active" onclick="setPeriod(7,this)">7 días</button>
     <button class="period-btn" onclick="setPeriod(30,this)">30 días</button>
@@ -587,147 +328,124 @@
   <div class="stats-card">
     <div class="stats-card-title">Cumplimiento global</div>
     <div class="stats-big" id="globalPct">—</div>
-    <div class="stats-sub" id="globalSub">en el período seleccionado</div>
+    <div class="stats-sub" id="globalSub">Agregá ítems para ver tu progreso</div>
+  </div>
+  <div class="stats-card">
+    <div class="stats-card-title">Por tipo de frecuencia</div>
+    <div id="freqStats"></div>
   </div>
   <div class="stats-card">
     <div class="stats-card-title">Por categoría</div>
     <div id="catStats"></div>
   </div>
   <div class="stats-card">
-    <div class="stats-card-title">Por hábito</div>
+    <div class="stats-card-title">Por hábito / tarea</div>
     <div id="habitStats"></div>
   </div>
   <div id="achievementsSection" style="display:none">
-    <div class="section-title" style="margin-top:8px">Logros</div>
+    <div class="section-title" style="margin-top:6px">Logros</div>
     <div id="achievementsList"></div>
   </div>
 </div>
 
-<div id="view-habits" class="view" style="display:none">
+<div id="view-habits" class="view">
   <div id="allHabitsList"></div>
-  <div style="margin-top:20px">
+  <div style="margin-top:18px">
     <div class="section-title">Categorías</div>
     <div id="catManageList"></div>
-    <button class="btn-secondary" onclick="showAddCategoryModal()" style="margin-top:8px">+ Nueva categoría</button>
+    <button class="btn-secondary" onclick="showAddCatModal()" style="margin-top:6px">+ Nueva categoría</button>
   </div>
 </div>
 
 <!-- NAV -->
 <nav class="nav" id="mainNav" style="display:none">
   <div class="nav-item active" onclick="switchView('today',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-    </svg>
-    Hoy
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Hoy
   </div>
   <div class="nav-item" onclick="switchView('calendar',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-    </svg>
-    Calendario
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendario
   </div>
   <div class="nav-item" onclick="switchView('analysis',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <path d="M18 20V10M12 20V4M6 20v-6"/>
-    </svg>
-    Análisis
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Análisis
   </div>
   <div class="nav-item" onclick="switchView('habits',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-    </svg>
-    Mis hábitos
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Mis ítems
   </div>
 </nav>
 
-<!-- FAB -->
 <button class="fab" id="mainFab" onclick="showAddHabit()" style="display:none">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
 </button>
 
-<!-- DAY DETAIL MODAL -->
-<div class="modal-overlay" id="dayModal" onclick="closeDayModal(event)">
+<!-- DAY MODAL -->
+<div class="modal-overlay" id="dayModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title" id="dayModalTitle"></div>
-      <div class="modal-subtitle" id="dayModalSub"></div>
-    </div>
+    <div class="modal-header"><div class="modal-title" id="dayModalTitle"></div><div class="modal-subtitle" id="dayModalSub"></div></div>
     <div class="modal-body" id="dayModalBody"></div>
   </div>
 </div>
 
 <!-- HABIT ACTION MODAL -->
-<div class="modal-overlay" id="habitActionModal" onclick="closeHabitActionModal(event)">
+<div class="modal-overlay" id="habitActionModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title" id="habitActionTitle"></div>
-      <div class="modal-subtitle" id="habitActionSub"></div>
-    </div>
+    <div class="modal-header"><div class="modal-title" id="habitActionTitle"></div><div class="modal-subtitle" id="habitActionSub"></div></div>
     <div id="habitActionBody"></div>
   </div>
 </div>
 
 <!-- ADD HABIT MODAL -->
-<div class="modal-overlay" id="addHabitModal" onclick="closeAddHabitModal(event)">
+<div class="modal-overlay" id="addHabitModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal" style="max-height:95vh">
     <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title" id="addHabitTitle">Nuevo hábito</div>
-    </div>
+    <div class="modal-header"><div class="modal-title" id="addHabitTitle">Nuevo ítem</div></div>
     <div class="modal-body">
       <div class="form-section">
         <label class="form-label">Nombre</label>
-        <input class="form-input" id="hName" placeholder="Ej: Ir al gimnasio" maxlength="40">
+        <input class="form-input" id="hName" placeholder="Ej: Ir al gimnasio" maxlength="50">
       </div>
       <div class="form-section">
         <label class="form-label">Categoría</label>
         <div class="cat-selector" id="hCatSelector"></div>
       </div>
       <div class="form-section">
-        <label class="form-label">Días de la semana</label>
-        <div class="days-selector">
-          <button class="day-btn" data-day="0">D</button>
-          <button class="day-btn" data-day="1">L</button>
-          <button class="day-btn" data-day="2">M</button>
-          <button class="day-btn" data-day="3">X</button>
-          <button class="day-btn" data-day="4">J</button>
-          <button class="day-btn" data-day="5">V</button>
-          <button class="day-btn" data-day="6">S</button>
+        <label class="form-label">Frecuencia</label>
+        <div class="freq-selector">
+          <div class="freq-btn active" data-freq="frequent" onclick="selectFreq('frequent')"><span>🔁</span>Frecuente</div>
+          <div class="freq-btn" data-freq="once" onclick="selectFreq('once')"><span>📌</span>Única vez</div>
+          <div class="freq-btn" data-freq="occasional" onclick="selectFreq('occasional')"><span>🔶</span>Ocasional</div>
         </div>
+        <div id="freqConfig"></div>
       </div>
       <div class="form-section">
-        <div class="toggle-row" onclick="toggleReminder()">
-          <div>
-            <div class="toggle-label">Recordatorio</div>
-            <div class="toggle-sub">Recibir notificación</div>
-          </div>
+        <div class="toggle-row" onclick="toggleField('reminder')">
+          <div><div class="toggle-label">Recordatorio</div><div class="toggle-sub">Notificación con hora</div></div>
           <div class="toggle" id="reminderToggle"></div>
         </div>
-        <div id="reminderTimeRow" style="display:none;margin-top:8px">
+        <div id="reminderTimeRow" style="display:none;margin-top:7px">
           <input class="form-input" type="time" id="hReminderTime" value="20:00">
         </div>
       </div>
-      <div class="form-section">
+      <div id="goalSection" class="form-section">
         <label class="form-label">Meta <span class="input-optional">opcional</span></label>
         <div class="form-row">
-          <input class="form-input" id="hGoalCount" type="number" placeholder="Ej: 80" min="1" style="max-width:120px">
+          <input class="form-input" id="hGoalCount" type="number" placeholder="Ej: 80" min="1" style="max-width:110px">
           <input class="form-input" id="hGoalLabel" placeholder="días de gimnasio">
         </div>
       </div>
       <div class="form-section">
         <label class="form-label">Intención <span class="input-optional">opcional</span></label>
-        <textarea class="form-input" id="hIntention" placeholder="¿Para qué hacés este hábito?" rows="2"></textarea>
+        <textarea class="form-input" id="hIntention" placeholder="¿Para qué?" rows="2"></textarea>
       </div>
-      <button class="btn-primary" onclick="saveHabit()">Guardar hábito</button>
-      <button class="btn-secondary" onclick="closeAddHabitModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveHabit()">Guardar</button>
+      <button class="btn-secondary" onclick="document.getElementById('addHabitModal').classList.remove('open')">Cancelar</button>
     </div>
   </div>
 </div>
 
 <!-- ADD CATEGORY MODAL -->
-<div class="modal-overlay" id="addCatModal" onclick="closeAddCatModal(event)">
+<div class="modal-overlay" id="addCatModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-header"><div class="modal-title">Nueva categoría</div></div>
@@ -741,85 +459,133 @@
         <div class="color-swatches" id="catColorSwatches"></div>
       </div>
       <button class="btn-primary" onclick="saveCategory()">Guardar</button>
-      <button class="btn-secondary" onclick="closeAddCatModal()">Cancelar</button>
+      <button class="btn-secondary" onclick="document.getElementById('addCatModal').classList.remove('open')">Cancelar</button>
     </div>
   </div>
 </div>
 
 <!-- CELEBRATION -->
-<div class="celebration-overlay" id="celebrationOverlay">
+<div class="celebration-overlay" id="celebOverlay">
   <div class="celebration-card">
-    <div class="celebration-emoji" id="celebEmoji">🎉</div>
-    <div class="celebration-title" id="celebTitle">¡Meta lograda!</div>
-    <div class="celebration-text" id="celebText"></div>
-    <button class="btn-primary" onclick="closeCelebration()">¡Genial!</button>
+    <div style="font-size:2.8rem;margin-bottom:14px">🎉</div>
+    <div style="font-family:'Fraunces',serif;font-size:1.4rem;font-weight:400;margin-bottom:8px">¡Meta lograda!</div>
+    <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin-bottom:22px" id="celebText"></div>
+    <button class="btn-primary" onclick="document.getElementById('celebOverlay').classList.remove('open')">¡Genial!</button>
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ============================================================
-// STATE
-// ============================================================
-const DAYS = ['D','L','M','X','J','V','S'];
-const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+// ─── CONSTANTS ───────────────────────────────────────────────
+const DAYS_SHORT = ['D','L','M','X','J','V','S'];
+const DAYS_FULL  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const MONTHS     = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const CAT_COLORS = ['#6BAA75','#3D5A99','#E8A838','#B07EB8','#E07070','#5BB8D4','#E8855A','#7B9E87'];
+const FREQ_LABELS = { frequent:'Frecuente', once:'Única vez', occasional:'Ocasional' };
+const FREQ_ICONS  = { frequent:'🔁', once:'📌', occasional:'🔶' };
 
-let state = {
-  habits: [],
+// ─── STATE ───────────────────────────────────────────────────
+let S = {
+  habits: [],        // unified items (habits + tasks)
   categories: [],
-  completions: {}, // "YYYY-MM-DD": { habitId: true/false }
+  completions: {},   // { "YYYY-MM-DD": { id: true } }
   achievements: [],
+  onboarded: false,
   calFilter: 'all',
   calYear: new Date().getFullYear(),
   calMonth: new Date().getMonth(),
-  editingHabitId: null,
-  selectedDays: [],
-  selectedCat: null,
-  reminderOn: false,
-  selectedColor: CAT_COLORS[0],
 };
 
-function save() {
-  localStorage.setItem('habitus_v1', JSON.stringify(state));
-}
-function load() {
-  const d = localStorage.getItem('habitus_v1');
-  if (d) { try { state = JSON.parse(d); } catch(e){} }
+// form state (not persisted)
+let F = {
+  editId: null,
+  freq: 'frequent',
+  days: [],
+  dates: [],        // for once/occasional: array of "YYYY-MM-DD"
+  cat: null,
+  reminder: false,
+  color: CAT_COLORS[0],
+  miniCalYear: new Date().getFullYear(),
+  miniCalMonth: new Date().getMonth(),
+  pendingForm: null,
+  returnToCat: false,
+};
+
+let analysisPeriod = 7;
+
+function persist() { localStorage.setItem('habitus_v2', JSON.stringify(S)); }
+function hydrate() {
+  try { const d = localStorage.getItem('habitus_v2'); if (d) S = JSON.parse(d); } catch(e){}
 }
 
-// ============================================================
-// INIT
-// ============================================================
+// ─── UTILS ───────────────────────────────────────────────────
+function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2,5); }
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+function dateStr(d) { return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function pad(n) { return String(n).padStart(2,'0'); }
+function isFuture(ds) { return ds > todayStr(); }
+function isToday(ds)  { return ds === todayStr(); }
+function getCat(id)   { return S.categories.find(c => c.id === id); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Does this habit appear on a given date string?
+function appearsOn(h, ds) {
+  if (h.deleted || h.paused) return false;
+  if (h.freq === 'frequent') {
+    const dow = new Date(ds + 'T12:00:00').getDay();
+    return (h.days || []).includes(dow);
+  }
+  return (h.dates || []).includes(ds);
+}
+
+function itemsForDate(ds) {
+  return S.habits.filter(h => appearsOn(h, ds));
+}
+
+function getGoalProgress(h) {
+  let n = 0;
+  Object.values(S.completions).forEach(day => { if (day[h.id] === true) n++; });
+  return n;
+}
+
+// ─── BOOT ────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  load();
+  hydrate();
   setTimeout(() => {
     document.getElementById('splash').style.opacity = '0';
     setTimeout(() => {
       document.getElementById('splash').style.display = 'none';
-      if (!state.onboarded) {
+      if (!S.onboarded) {
         document.getElementById('onboarding').style.display = 'flex';
-      } else {
-        showApp();
-      }
+      } else { showApp(); }
     }, 600);
   }, 1400);
 });
 
+// Onboarding cat toggle
+document.addEventListener('click', e => {
+  const btn = e.target.closest('#ob-cats .cat-btn');
+  if (btn) btn.classList.toggle('selected');
+});
+
 function finishOnboarding() {
-  // Add selected categories from onboarding
-  const sel = document.querySelectorAll('#ob-cats .cat-btn.selected');
-  sel.forEach(btn => {
+  document.querySelectorAll('#ob-cats .cat-btn.selected').forEach(btn => {
     const name = btn.dataset.cat;
-    if (!state.categories.find(c => c.name === name)) {
-      const colors = {'Salud':'#6BAA75','Casa':'#E8A838','Aprendizaje':'#3D5A99','Personal':'#B07EB8'};
-      state.categories.push({ id: uid(), name, color: colors[name] || CAT_COLORS[0] });
+    if (!S.categories.find(c => c.name === name)) {
+      const cols = {Salud:'#6BAA75',Casa:'#E8A838',Aprendizaje:'#3D5A99',Personal:'#B07EB8'};
+      S.categories.push({ id: uid(), name, color: cols[name] || CAT_COLORS[0] });
     }
   });
-  state.onboarded = true;
-  save();
+  S.onboarded = true; persist();
   document.getElementById('onboarding').style.display = 'none';
   showApp();
 }
@@ -828,310 +594,228 @@ function showApp() {
   document.getElementById('appHeader').style.display = 'block';
   document.getElementById('mainNav').style.display = 'flex';
   document.getElementById('mainFab').style.display = 'flex';
-  document.querySelectorAll('.view').forEach(v => v.style.display = 'block');
-  updateHeaderDate();
+  // clear any inline display so CSS classes take over
+  document.querySelectorAll('.view').forEach(v => { v.style.display = ''; v.classList.remove('active'); });
+  document.getElementById('view-today').classList.add('active');
+  const now = new Date();
+  document.getElementById('headerDate').textContent =
+    `${DAYS_FULL[now.getDay()]}, ${now.getDate()} de ${MONTHS[now.getMonth()]}`;
   renderToday();
 }
 
-function updateHeaderDate() {
-  const now = new Date();
-  const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  document.getElementById('headerDateStr').textContent =
-    `${days[now.getDay()]}, ${now.getDate()} de ${MONTHS[now.getMonth()]}`;
-}
-
-// ============================================================
-// UTILS
-// ============================================================
-function uid() { return Math.random().toString(36).substr(2,9); }
-
-function todayStr() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
-function dateStr(d) {
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
-function isPast(ds) { return ds < todayStr(); }
-function isToday(ds) { return ds === todayStr(); }
-function isFuture(ds) { return ds > todayStr(); }
-
-function getCat(id) { return state.categories.find(c => c.id === id); }
-
-function habitsForDay(dateObj) {
-  const dow = dateObj.getDay();
-  return state.habits.filter(h => h.days.includes(dow) && !h.deleted);
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-// ============================================================
-// NAV & VIEWS
-// ============================================================
-let currentView = 'today';
-
+// ─── NAV ─────────────────────────────────────────────────────
 function switchView(name, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   if (el) el.classList.add('active');
-  currentView = name;
-
   const fab = document.getElementById('mainFab');
   fab.style.display = (name === 'today' || name === 'habits') ? 'flex' : 'none';
-
-  if (name === 'today') renderToday();
+  if (name === 'today')    renderToday();
   if (name === 'calendar') renderCalendar();
   if (name === 'analysis') renderAnalysis();
-  if (name === 'habits') renderAllHabits();
+  if (name === 'habits')   renderAllHabits();
 }
 
-// ============================================================
-// TODAY
-// ============================================================
+// ─── TODAY ───────────────────────────────────────────────────
 function renderToday() {
-  const today = new Date();
   const ds = todayStr();
-  const habits = habitsForDay(today).filter(h => !h.paused);
-  const comps = state.completions[ds] || {};
-  const done = habits.filter(h => comps[h.id]).length;
-  const total = habits.length;
-  const pct = total > 0 ? Math.round((done/total)*100) : null;
+  const items = itemsForDate(ds);
+  const comps = S.completions[ds] || {};
+  const done  = items.filter(h => comps[h.id] === true).length;
+  const total = items.length;
+  const pct   = total > 0 ? Math.round((done/total)*100) : null;
 
   document.getElementById('todayPct').textContent = pct !== null ? pct+'%' : '—';
   document.getElementById('todaySub').textContent = total > 0
-    ? `${done} de ${total} hábitos completados`
-    : 'Sin hábitos programados para hoy';
+    ? `${done} de ${total} completados`
+    : 'Sin ítems para hoy';
   document.getElementById('todayBar').style.width = (pct||0)+'%';
 
-  const container = document.getElementById('todayHabits');
-  if (habits.length === 0) {
+  const container = document.getElementById('todayList');
+  if (items.length === 0) {
     container.innerHTML = `<div class="empty-state">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
-      <h3>Sin hábitos para hoy</h3>
-      <p>Agregá un hábito con el botón +</p>
-    </div>`;
+      <h3>Sin ítems para hoy</h3><p>Agregá un hábito o tarea con el botón +</p></div>`;
     return;
   }
 
-  container.innerHTML = habits.map(h => {
-    const cat = getCat(h.categoryId);
-    const isDone = !!comps[h.id];
-    const goalHtml = h.goal ? (() => {
-      const prog = getGoalProgress(h);
-      return `<span style="color:var(--indigo);font-size:0.72rem"> · ${prog}/${h.goal} meta</span>`;
-    })() : '';
-    return `<div class="habit-card" onclick="toggleHabit('${h.id}')">
-      <div class="habit-check ${isDone?'done':''}" id="check_${h.id}">
+  // Sort: done last
+  const sorted = [...items].sort((a,b) => {
+    const da = comps[a.id]===true, db = comps[b.id]===true;
+    if (da && !db) return 1; if (!da && db) return -1; return 0;
+  });
+
+  container.innerHTML = sorted.map(h => {
+    const cat   = getCat(h.categoryId);
+    const isDone = comps[h.id] === true;
+    const goalHtml = h.goal ? `<span style="color:var(--indigo);font-size:0.7rem">${getGoalProgress(h)}/${h.goal}</span>` : '';
+    return `<div class="habit-card" onclick="toggleItem('${h.id}')">
+      <div class="habit-check ${isDone?'done':''}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
       </div>
       <div class="habit-info">
         <div class="habit-name">${h.name}</div>
-        <div class="habit-meta">${cat ? cat.name : ''}${goalHtml}</div>
+        <div class="habit-meta">
+          <div class="cat-dot" style="background:${cat?cat.color:'var(--border)'}"></div>
+          ${cat?cat.name:''}
+          <span class="freq-badge ${h.freq}">${FREQ_ICONS[h.freq]} ${FREQ_LABELS[h.freq]}</span>
+          ${goalHtml}
+        </div>
       </div>
-      <div class="habit-cat-dot" style="background:${cat?cat.color:'var(--border)'}"></div>
     </div>`;
   }).join('');
 }
 
-function toggleHabit(id) {
+function toggleItem(id) {
   const ds = todayStr();
-  if (!state.completions[ds]) state.completions[ds] = {};
-  const was = state.completions[ds][id];
-  state.completions[ds][id] = !was;
-  save();
-
-  // Check goal
+  if (!S.completions[ds]) S.completions[ds] = {};
+  const was = S.completions[ds][id] === true;
+  S.completions[ds][id] = !was;
+  persist();
   if (!was) {
-    const h = state.habits.find(x => x.id === id);
-    if (h && h.goal) {
-      const prog = getGoalProgress(h);
-      if (prog >= h.goal) checkGoalAchievement(h);
-    }
+    const h = S.habits.find(x => x.id === id);
+    if (h && h.goal && getGoalProgress(h) >= h.goal) checkAchievement(h);
   }
   renderToday();
 }
 
-function getGoalProgress(h) {
-  let count = 0;
-  Object.entries(state.completions).forEach(([ds, comps]) => {
-    if (comps[h.id] === true) count++;
-  });
-  return count;
-}
-
-function checkGoalAchievement(h) {
-  const alreadyCelebrated = state.achievements.find(a => a.habitId === h.id && a.goal === h.goal);
-  if (alreadyCelebrated) return;
-  state.achievements.push({ id: uid(), habitId: h.id, habitName: h.name, goal: h.goal, goalLabel: h.goalLabel, date: todayStr(), intention: h.intention });
-  save();
-  showCelebration(h);
-}
-
-function showCelebration(h) {
-  document.getElementById('celebEmoji').textContent = '🎉';
-  document.getElementById('celebTitle').textContent = '¡Meta lograda!';
+function checkAchievement(h) {
+  if (S.achievements.find(a => a.habitId === h.id && a.goal === h.goal)) return;
+  S.achievements.push({ id: uid(), habitId: h.id, habitName: h.name, goal: h.goal, goalLabel: h.goalLabel, date: todayStr(), intention: h.intention });
+  persist();
   const label = h.goalLabel || `${h.goal} días`;
-  const intention = h.intention ? `\n\n"${h.intention}"` : '';
-  document.getElementById('celebText').textContent =
-    `Lograste ${label} de ${h.name}. Eso es disciplina real.${intention}`;
-  document.getElementById('celebrationOverlay').classList.add('open');
+  document.getElementById('celebText').textContent = `Lograste ${label} de "${h.name}". Eso es disciplina real.${h.intention ? '\n\n"'+h.intention+'"' : ''}`;
+  document.getElementById('celebOverlay').classList.add('open');
 }
 
-function closeCelebration() {
-  document.getElementById('celebrationOverlay').classList.remove('open');
-}
-
-// ============================================================
-// CALENDAR
-// ============================================================
-function renderCalendar() {
-  renderCalFilter();
-  renderCalGrid();
-}
+// ─── CALENDAR ────────────────────────────────────────────────
+function renderCalendar() { renderCalFilter(); renderCalGrid(); }
 
 function renderCalFilter() {
   const f = document.getElementById('calFilter');
-  let chips = `<div class="filter-chip ${state.calFilter==='all'?'active':''}" onclick="setCalFilter('all')">Todos</div>`;
-  state.categories.forEach(cat => {
-    chips += `<div class="filter-chip ${state.calFilter===cat.id?'active':''}" onclick="setCalFilter('${cat.id}')">${cat.name}</div>`;
+  let html = `<div class="filter-chip ${S.calFilter==='all'?'active':''}" onclick="setCalFilter('all')">Todos</div>`;
+
+  // Frequency filters
+  html += `<div class="filter-divider">Tipo</div>`;
+  ['frequent','once','occasional'].forEach(freq => {
+    html += `<div class="filter-chip ${S.calFilter===freq?'active':''}" onclick="setCalFilter('${freq}')">${FREQ_ICONS[freq]} ${FREQ_LABELS[freq]}</div>`;
   });
-  state.habits.filter(h=>!h.deleted).forEach(h => {
-    chips += `<div class="filter-chip ${state.calFilter===h.id?'active':''}" onclick="setCalFilter('${h.id}')">${h.name}</div>`;
-  });
-  f.innerHTML = chips;
+
+  if (S.categories.length > 0) {
+    html += `<div class="filter-divider">Categoría</div>`;
+    S.categories.forEach(cat => {
+      const active = S.calFilter === cat.id;
+      html += `<div class="filter-chip ${active?'active':''}" onclick="setCalFilter('${cat.id}')" style="${active?'':'border-left:3px solid '+cat.color}">${cat.name}</div>`;
+    });
+  }
+
+  const habits = S.habits.filter(h => !h.deleted);
+  if (habits.length > 0) {
+    html += `<div class="filter-divider">Ítem</div>`;
+    habits.forEach(h => {
+      const cat = getCat(h.categoryId);
+      const active = S.calFilter === h.id;
+      html += `<div class="filter-chip ${active?'active':''}" onclick="setCalFilter('${h.id}')" style="${active?'':'border-left:3px solid '+(cat?cat.color:'var(--border)')}">${h.name}</div>`;
+    });
+  }
+  f.innerHTML = html;
 }
 
-function setCalFilter(val) {
-  state.calFilter = val;
-  renderCalendar();
-}
+function setCalFilter(val) { S.calFilter = val; renderCalendar(); }
 
 function changeMonth(dir) {
-  state.calMonth += dir;
-  if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
-  if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+  S.calMonth += dir;
+  if (S.calMonth > 11) { S.calMonth = 0; S.calYear++; }
+  if (S.calMonth < 0)  { S.calMonth = 11; S.calYear--; }
   renderCalGrid();
 }
 
 function renderCalGrid() {
-  document.getElementById('calMonthTitle').textContent = `${MONTHS[state.calMonth]} ${state.calYear}`;
-  const grid = document.getElementById('calGrid');
-  const firstDay = new Date(state.calYear, state.calMonth, 1).getDay();
-  const daysInMonth = new Date(state.calYear, state.calMonth+1, 0).getDate();
-  const today = new Date();
-
+  document.getElementById('calTitle').textContent = `${MONTHS[S.calMonth]} ${S.calYear}`;
+  const firstDow = new Date(S.calYear, S.calMonth, 1).getDay();
+  const daysInMonth = new Date(S.calYear, S.calMonth+1, 0).getDate();
+  const today = todayStr();
   let html = '';
-  for (let i = 0; i < firstDay; i++) {
-    html += `<div class="cal-day empty"></div>`;
-  }
+
+  for (let i = 0; i < firstDow; i++) html += `<div class="cal-day empty"></div>`;
 
   for (let d = 1; d <= daysInMonth; d++) {
-    const dateObj = new Date(state.calYear, state.calMonth, d);
+    const dateObj = new Date(S.calYear, S.calMonth, d);
     const ds = dateStr(dateObj);
-    const isT = isToday(ds);
-    const isFut = isFuture(ds);
+    const fut = isFuture(ds), tod = isToday(ds);
 
-    let pct = null;
-    let relevantHabits = habitsForDay(dateObj).filter(h => !h.deleted);
+    let items = itemsForDate(ds);
 
-    if (state.calFilter !== 'all') {
-      const cat = state.categories.find(c => c.id === state.calFilter);
-      if (cat) {
-        relevantHabits = relevantHabits.filter(h => h.categoryId === state.calFilter);
+    // Apply filter
+    if (S.calFilter !== 'all') {
+      if (['frequent','once','occasional'].includes(S.calFilter)) {
+        items = items.filter(h => h.freq === S.calFilter);
+      } else if (S.categories.find(c => c.id === S.calFilter)) {
+        items = items.filter(h => h.categoryId === S.calFilter);
       } else {
-        relevantHabits = relevantHabits.filter(h => h.id === state.calFilter);
+        items = items.filter(h => h.id === S.calFilter);
       }
     }
 
-    const active = relevantHabits.filter(h => !h.paused);
-
-    if (!isFut && active.length > 0) {
-      const comps = state.completions[ds] || {};
-      const done = active.filter(h => comps[h.id]).length;
-      pct = Math.round((done / active.length) * 100);
+    let pct = null;
+    if (!fut && items.length > 0) {
+      const comps = S.completions[ds] || {};
+      pct = Math.round((items.filter(h => comps[h.id]===true).length / items.length)*100);
     }
 
-    let bg = 'transparent';
-    let textColor = 'var(--text)';
+    let bg = 'transparent', col = 'var(--text)';
     if (pct !== null) {
-      const alpha = 0.1 + (pct/100)*0.85;
-      bg = `rgba(61,90,153,${alpha.toFixed(2)})`;
-      if (pct > 50) textColor = 'white';
+      const a = 0.1 + (pct/100)*0.85;
+      bg = `rgba(61,90,153,${a.toFixed(2)})`;
+      if (pct > 55) col = 'white';
     }
 
-    const classes = ['cal-day', isT?'today':'', isFut?'future':''].filter(Boolean).join(' ');
-    html += `<div class="${classes}" style="background:${bg};color:${textColor}" onclick="openDayModal('${ds}')">
-      <span class="cal-day-num">${d}</span>
-    </div>`;
+    const cls = ['cal-day', tod?'today':'', fut?'future':''].filter(Boolean).join(' ');
+    html += `<div class="${cls}" style="background:${bg};color:${col}" onclick="openDayModal('${ds}')">
+      <span class="cal-day-num">${d}</span></div>`;
   }
-  grid.innerHTML = html;
+  document.getElementById('calGrid').innerHTML = html;
 }
 
 function openDayModal(ds) {
   const dateObj = new Date(ds + 'T12:00:00');
-  const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  const label = `${days[dateObj.getDay()]}, ${dateObj.getDate()} de ${MONTHS[dateObj.getMonth()]}`;
-
-  const habits = habitsForDay(dateObj).filter(h => !h.deleted);
-  const comps = state.completions[ds] || {};
-  const isFut = isFuture(ds);
-  const isT = isToday(ds);
-
-  const done = habits.filter(h => !h.paused && comps[h.id]).length;
-  const active = habits.filter(h => !h.paused).length;
-  const pct = active > 0 ? Math.round((done/active)*100) : null;
+  const label = `${DAYS_FULL[dateObj.getDay()]}, ${dateObj.getDate()} de ${MONTHS[dateObj.getMonth()]}`;
+  const fut  = isFuture(ds);
+  const items = S.habits.filter(h => !h.deleted && (h.paused || appearsOn(h,ds)));
+  const active = items.filter(h => !h.paused && appearsOn(h,ds));
+  const comps = S.completions[ds] || {};
+  const done  = active.filter(h => comps[h.id]===true).length;
+  const pct   = active.length > 0 ? Math.round((done/active.length)*100) : null;
 
   document.getElementById('dayModalTitle').textContent = label;
-  document.getElementById('dayModalSub').textContent = isFut
-    ? 'Planeado'
-    : pct !== null ? `${pct}% · ${done} de ${active} completados` : 'Sin hábitos';
+  document.getElementById('dayModalSub').textContent = fut ? 'Planeado' : pct !== null ? `${pct}% · ${done} de ${active.length} completados` : 'Sin ítems';
 
-  let body = '';
-  if (habits.length === 0) {
-    body = '<p style="color:var(--text-muted);font-size:0.85rem;padding:8px 0">Sin hábitos programados</p>';
+  const allForDay = S.habits.filter(h => !h.deleted && appearsOn(h,ds));
+  if (allForDay.length === 0) {
+    document.getElementById('dayModalBody').innerHTML = '<p style="color:var(--text-muted);font-size:0.83rem;padding:6px 0">Sin ítems programados</p>';
   } else {
-    // Show done first, then not done
-    const sorted = [...habits].sort((a,b) => {
-      if (comps[a.id] && !comps[b.id]) return -1;
-      if (!comps[a.id] && comps[b.id]) return 1;
-      return 0;
-    });
-    sorted.forEach(h => {
+    const sorted = [...allForDay].sort((a,b) => (comps[b.id]===true)-(comps[a.id]===true));
+    document.getElementById('dayModalBody').innerHTML = sorted.map(h => {
       const cat = getCat(h.categoryId);
-      let statusClass = isFut ? 'future' : comps[h.id] ? 'done' : h.paused ? 'future' : 'missed';
-      const statusLabel = isFut ? 'Planeado' : comps[h.id] ? '✓' : h.paused ? 'Pausado' : '✗';
-      body += `<div class="modal-habit-row">
-        <div class="status-dot ${statusClass}"></div>
+      const statusCls = fut ? 'future' : comps[h.id]===true ? 'done' : 'missed';
+      const statusLbl = fut ? '–' : comps[h.id]===true ? '✓' : '✗';
+      return `<div class="modal-habit-row">
+        <div class="status-dot ${statusCls}"></div>
         <div style="flex:1">
-          <div class="modal-habit-name">${h.name}</div>
-          <div class="modal-habit-cat">${cat?cat.name:''}</div>
+          <div style="font-size:0.88rem;font-weight:500">${h.name}</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);display:flex;gap:6px;margin-top:2px">
+            ${cat?cat.name:''} <span>${FREQ_ICONS[h.freq]}</span>
+          </div>
         </div>
-        <div style="font-size:0.8rem;color:var(--text-muted)">${statusLabel}</div>
+        <div style="font-size:0.78rem;color:var(--text-muted)">${statusLbl}</div>
       </div>`;
-    });
+    }).join('');
   }
-  document.getElementById('dayModalBody').innerHTML = body;
   document.getElementById('dayModal').classList.add('open');
 }
 
-function closeDayModal(e) {
-  if (e.target === document.getElementById('dayModal')) {
-    document.getElementById('dayModal').classList.remove('open');
-  }
-}
-
-// ============================================================
-// ANALYSIS
-// ============================================================
-let analysisPeriod = 7;
-
+// ─── ANALYSIS ────────────────────────────────────────────────
 function setPeriod(days, btn) {
   analysisPeriod = days;
   document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
@@ -1147,239 +831,189 @@ function renderAnalysis() {
     dates.push(dateStr(d));
   }
 
-  // Global
-  let totalScheduled = 0, totalDone = 0;
-  dates.forEach(ds => {
-    const dateObj = new Date(ds + 'T12:00:00');
-    const habits = habitsForDay(dateObj).filter(h => !h.deleted && !h.paused);
-    const comps = state.completions[ds] || {};
-    totalScheduled += habits.length;
-    totalDone += habits.filter(h => comps[h.id]).length;
-  });
-
-  const globalPct = totalScheduled > 0 ? Math.round((totalDone/totalScheduled)*100) : null;
-  document.getElementById('globalPct').textContent = globalPct !== null ? globalPct+'%' : '—';
-  document.getElementById('globalSub').textContent = totalScheduled > 0
-    ? `${totalDone} de ${totalScheduled} en ${analysisPeriod} días`
-    : 'Agregá hábitos para ver tu progreso';
-
-  // By category
-  const catMap = {};
-  state.categories.forEach(cat => { catMap[cat.id] = { scheduled: 0, done: 0, name: cat.name, color: cat.color }; });
-  dates.forEach(ds => {
-    const dateObj = new Date(ds + 'T12:00:00');
-    const habits = habitsForDay(dateObj).filter(h => !h.deleted && !h.paused);
-    const comps = state.completions[ds] || {};
-    habits.forEach(h => {
-      if (catMap[h.categoryId]) {
-        catMap[h.categoryId].scheduled++;
-        if (comps[h.id]) catMap[h.categoryId].done++;
-      }
-    });
-  });
-
-  let catHtml = '';
-  Object.values(catMap).filter(c => c.scheduled > 0).forEach(c => {
-    const pct = Math.round((c.done/c.scheduled)*100);
-    catHtml += `<div class="stats-bar-row">
-      <div class="stats-bar-label">${c.name}</div>
-      <div class="stats-bar-track"><div class="stats-bar-fill" style="width:${pct}%;background:${c.color}"></div></div>
-      <div class="stats-bar-pct">${pct}%</div>
-    </div>`;
-  });
-  document.getElementById('catStats').innerHTML = catHtml || '<div style="color:var(--text-muted);font-size:0.85rem">Sin datos</div>';
-
-  // By habit
+  let totalSched = 0, totalDone = 0;
+  const freqMap = { frequent:{s:0,d:0}, once:{s:0,d:0}, occasional:{s:0,d:0} };
+  const catMap  = {};
   const habitMap = {};
-  state.habits.filter(h => !h.deleted).forEach(h => { habitMap[h.id] = { scheduled: 0, done: 0, name: h.name }; });
+  S.categories.forEach(c => { catMap[c.id] = {s:0,d:0,name:c.name,color:c.color}; });
+  S.habits.filter(h=>!h.deleted).forEach(h => { habitMap[h.id] = {s:0,d:0,name:h.name,freq:h.freq}; });
+
   dates.forEach(ds => {
-    const dateObj = new Date(ds + 'T12:00:00');
-    const habits = habitsForDay(dateObj).filter(h => !h.deleted && !h.paused);
-    const comps = state.completions[ds] || {};
-    habits.forEach(h => {
-      if (habitMap[h.id]) {
-        habitMap[h.id].scheduled++;
-        if (comps[h.id]) habitMap[h.id].done++;
-      }
+    const items = itemsForDate(ds);
+    const comps = S.completions[ds] || {};
+    items.forEach(h => {
+      totalSched++;
+      const done = comps[h.id]===true;
+      if (done) totalDone++;
+      if (freqMap[h.freq]) { freqMap[h.freq].s++; if (done) freqMap[h.freq].d++; }
+      if (catMap[h.categoryId])  { catMap[h.categoryId].s++;  if (done) catMap[h.categoryId].d++;  }
+      if (habitMap[h.id])        { habitMap[h.id].s++;        if (done) habitMap[h.id].d++;        }
     });
   });
 
-  let habitHtml = '';
-  Object.values(habitMap).filter(h => h.scheduled > 0)
-    .sort((a,b) => (b.done/b.scheduled) - (a.done/a.scheduled))
-    .forEach(h => {
-      const pct = Math.round((h.done/h.scheduled)*100);
-      habitHtml += `<div class="stats-bar-row">
-        <div class="stats-bar-label">${h.name}</div>
-        <div class="stats-bar-track"><div class="stats-bar-fill" style="width:${pct}%"></div></div>
-        <div class="stats-bar-pct">${pct}%</div>
-      </div>`;
-    });
-  document.getElementById('habitStats').innerHTML = habitHtml || '<div style="color:var(--text-muted);font-size:0.85rem">Sin datos</div>';
+  const gPct = totalSched > 0 ? Math.round((totalDone/totalSched)*100) : null;
+  document.getElementById('globalPct').textContent = gPct !== null ? gPct+'%' : '—';
+  document.getElementById('globalSub').textContent = totalSched > 0
+    ? `${totalDone} de ${totalSched} en ${analysisPeriod} días`
+    : 'Agregá ítems para ver tu progreso';
 
-  // Achievements
-  if (state.achievements.length > 0) {
+  const bar = (label, done, sched, color='var(--indigo)') => {
+    const p = sched > 0 ? Math.round((done/sched)*100) : 0;
+    return `<div class="stats-bar-row">
+      <div class="stats-bar-label">${label}</div>
+      <div class="stats-bar-track"><div class="stats-bar-fill" style="width:${p}%;background:${color}"></div></div>
+      <div class="stats-bar-pct">${p}%</div></div>`;
+  };
+
+  document.getElementById('freqStats').innerHTML =
+    ['frequent','once','occasional'].filter(f => freqMap[f].s > 0)
+      .map(f => bar(`${FREQ_ICONS[f]} ${FREQ_LABELS[f]}`, freqMap[f].d, freqMap[f].s)).join('') ||
+    '<div style="color:var(--text-muted);font-size:0.83rem">Sin datos</div>';
+
+  document.getElementById('catStats').innerHTML =
+    Object.values(catMap).filter(c=>c.s>0).map(c => bar(c.name,c.d,c.s,c.color)).join('') ||
+    '<div style="color:var(--text-muted);font-size:0.83rem">Sin datos</div>';
+
+  document.getElementById('habitStats').innerHTML =
+    Object.values(habitMap).filter(h=>h.s>0)
+      .sort((a,b)=>(b.d/b.s)-(a.d/a.s))
+      .map(h => bar(`${FREQ_ICONS[h.freq]} ${h.name}`,h.d,h.s)).join('') ||
+    '<div style="color:var(--text-muted);font-size:0.83rem">Sin datos</div>';
+
+  if (S.achievements.length > 0) {
     document.getElementById('achievementsSection').style.display = 'block';
-    document.getElementById('achievementsList').innerHTML = state.achievements.map(a =>
-      `<div class="achievement-card">
-        <div class="achievement-icon">🏆</div>
-        <div>
-          <div class="achievement-name">${a.goalLabel || a.goal+' días'} — ${a.habitName}</div>
-          <div class="achievement-date">${a.date}</div>
-        </div>
-      </div>`
+    document.getElementById('achievementsList').innerHTML = S.achievements.map(a =>
+      `<div class="achievement-card"><div class="achievement-icon">🏆</div>
+        <div><div style="font-weight:500;font-size:0.88rem">${a.goalLabel||a.goal+' días'} — ${a.habitName}</div>
+        <div style="font-size:0.72rem;opacity:0.65;margin-top:2px">${a.date}</div></div></div>`
     ).join('');
   }
 }
 
-// ============================================================
-// ALL HABITS (Mis hábitos)
-// ============================================================
+// ─── ALL HABITS ───────────────────────────────────────────────
 function renderAllHabits() {
-  const list = document.getElementById('allHabitsList');
-  const habits = state.habits.filter(h => !h.deleted);
-  const active = habits.filter(h => !h.paused);
-  const paused = habits.filter(h => h.paused);
+  const habits  = S.habits.filter(h => !h.deleted && !h.paused);
+  const paused  = S.habits.filter(h => !h.deleted &&  h.paused);
+  const list    = document.getElementById('allHabitsList');
 
-  if (habits.length === 0) {
+  if (habits.length === 0 && paused.length === 0) {
     list.innerHTML = `<div class="empty-state">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      <h3>Sin hábitos todavía</h3>
-      <p>Agregá tu primer hábito con el botón +</p>
-    </div>`;
+      <h3>Sin ítems todavía</h3><p>Usá el botón + para crear tu primer hábito o tarea</p></div>`;
   } else {
-    const renderHabitCard = (h) => {
+    const card = h => {
       const cat = getCat(h.categoryId);
-      const daysLabel = h.days.map(d => DAYS[d]).join(' · ');
-      const goalProg = h.goal ? `${getGoalProgress(h)}/${h.goal}` : '';
-      return `<div class="habit-card ${h.paused?'paused':''}" onclick="openHabitAction('${h.id}')">
-        <div class="habit-cat-dot" style="background:${cat?cat.color:'var(--border)'}"></div>
+      const sub = h.freq === 'frequent'
+        ? (h.days||[]).map(d=>DAYS_SHORT[d]).join(' · ')
+        : (h.dates||[]).length === 1
+          ? h.dates[0]
+          : `${(h.dates||[]).length} fechas`;
+      const goalProg = h.goal ? ` · ${getGoalProgress(h)}/${h.goal}` : '';
+      return `<div class="habit-card" onclick="openHabitAction('${h.id}')">
+        <div class="cat-dot" style="background:${cat?cat.color:'var(--border)'}"></div>
         <div class="habit-info">
           <div class="habit-name">${h.name}</div>
-          <div class="habit-meta">${daysLabel}${goalProg?' · '+goalProg+' meta':''}</div>
+          <div class="habit-meta">
+            <span class="freq-badge ${h.freq}">${FREQ_ICONS[h.freq]}</span>
+            ${sub}${goalProg}
+          </div>
         </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="1.8" style="width:16px;height:16px;flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="1.8" style="width:15px;height:15px;flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
       </div>`;
     };
-
     let html = '';
-    if (active.length > 0) {
-      html += `<div class="section-title">Activos</div>` + active.map(renderHabitCard).join('');
-    }
-    if (paused.length > 0) {
-      html += `<div class="section-title" style="margin-top:20px">Pausados</div>` + paused.map(renderHabitCard).join('');
-    }
+    if (habits.length > 0) html += `<div class="section-title">Activos</div>` + habits.map(card).join('');
+    if (paused.length > 0) html += `<div class="section-title" style="margin-top:18px">Pausados</div>` + paused.map(card).join('');
     list.innerHTML = html;
   }
 
-  // Categories
-  const catList = document.getElementById('catManageList');
-  catList.innerHTML = state.categories.map(cat =>
+  document.getElementById('catManageList').innerHTML = S.categories.map(cat =>
     `<div class="cat-manage-item">
       <div class="cat-color-dot" style="background:${cat.color}"></div>
       <div class="cat-manage-name">${cat.name}</div>
-      <div class="cat-delete-btn" onclick="deleteCategory('${cat.id}')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </div>
-    </div>`
+      <div style="cursor:pointer;color:var(--text-light)" onclick="deleteCat('${cat.id}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </div></div>`
   ).join('');
 }
 
-// ============================================================
-// HABIT ACTIONS
-// ============================================================
+// ─── HABIT ACTIONS ────────────────────────────────────────────
 function openHabitAction(id) {
-  const h = state.habits.find(x => x.id === id);
+  const h = S.habits.find(x => x.id === id);
   if (!h) return;
   const cat = getCat(h.categoryId);
   document.getElementById('habitActionTitle').textContent = h.name;
-  document.getElementById('habitActionSub').textContent = cat ? cat.name : '';
+  document.getElementById('habitActionSub').textContent = `${FREQ_ICONS[h.freq]} ${FREQ_LABELS[h.freq]}${cat?' · '+cat.name:''}`;
 
   let goalHtml = '';
   if (h.goal) {
     const prog = getGoalProgress(h);
-    const pct = Math.round((prog/h.goal)*100);
-    goalHtml = `<div style="padding:16px 24px;border-bottom:1px solid var(--border)">
-      <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:6px">META: ${h.goalLabel||h.goal+' días'}</div>
-      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:${Math.min(pct,100)}%"></div></div>
-      <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px">${prog} de ${h.goal}</div>
+    const pct = Math.min(Math.round((prog/h.goal)*100),100);
+    goalHtml = `<div style="padding:14px 22px;border-bottom:1px solid var(--border)">
+      <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:5px">META: ${h.goalLabel||h.goal+' días'}</div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-top:3px">${prog} de ${h.goal}</div>
     </div>`;
   }
 
   document.getElementById('habitActionBody').innerHTML = goalHtml +
-    `<div class="habit-action-btn" onclick="editHabit('${id}')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      Editar hábito
-    </div>
+    `<div class="habit-action-btn" onclick="editItem('${id}')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</div>
     <div class="habit-action-btn" onclick="togglePause('${id}')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-      ${h.paused ? 'Reanudar hábito' : 'Pausar hábito'}
-    </div>
-    <div class="habit-action-btn danger" onclick="confirmDeleteHabit('${id}')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-      Eliminar hábito
-    </div>`;
-
+      ${h.paused?'Reanudar':'Pausar'}</div>
+    <div class="habit-action-btn danger" onclick="confirmDelete('${id}')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>Eliminar</div>`;
   document.getElementById('habitActionModal').classList.add('open');
 }
 
-function closeHabitActionModal(e) {
-  if (e.target === document.getElementById('habitActionModal')) {
-    document.getElementById('habitActionModal').classList.remove('open');
-  }
+function editItem(id) {
+  document.getElementById('habitActionModal').classList.remove('open');
+  setTimeout(() => showAddHabit(id), 280);
 }
 
 function togglePause(id) {
-  const h = state.habits.find(x => x.id === id);
+  const h = S.habits.find(x => x.id === id);
   if (!h) return;
-  h.paused = !h.paused;
-  save();
+  h.paused = !h.paused; persist();
   document.getElementById('habitActionModal').classList.remove('open');
-  renderAllHabits();
-  renderToday();
-  showToast(h.paused ? 'Hábito pausado' : 'Hábito reanudado');
+  renderAllHabits(); renderToday();
+  showToast(h.paused ? 'Pausado' : 'Reanudado');
 }
 
-function confirmDeleteHabit(id) {
-  const h = state.habits.find(x => x.id === id);
+function confirmDelete(id) {
+  const h = S.habits.find(x => x.id === id);
   if (!h) return;
-  // Replace native confirm with inline confirmation in modal
-  const body = document.getElementById('habitActionBody');
-  body.innerHTML = `
+  document.getElementById('habitActionBody').innerHTML = `
     <div style="padding:24px;text-align:center">
-      <div style="font-size:1.5rem;margin-bottom:12px">🗑️</div>
-      <div style="font-weight:500;margin-bottom:8px">¿Eliminar "${h.name}"?</div>
-      <div style="font-size:0.83rem;color:var(--text-muted);margin-bottom:24px;line-height:1.5">Esta acción no se puede deshacer.<br>Tu historial de este hábito se perderá.</div>
-      <button class="btn-danger" style="margin-top:0" onclick="doDeleteHabit('${id}')">Sí, eliminar</button>
+      <div style="font-size:1.4rem;margin-bottom:10px">🗑️</div>
+      <div style="font-weight:500;margin-bottom:7px">¿Eliminar "${h.name}"?</div>
+      <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:22px;line-height:1.5">Esta acción no se puede deshacer.</div>
+      <button class="btn-danger" style="margin-top:0" onclick="doDelete('${id}')">Sí, eliminar</button>
       <button class="btn-secondary" onclick="openHabitAction('${id}')">Cancelar</button>
     </div>`;
 }
 
-function doDeleteHabit(id) {
-  const h = state.habits.find(x => x.id === id);
-  if (!h) return;
-  h.deleted = true; save();
+function doDelete(id) {
+  const h = S.habits.find(x => x.id === id);
+  if (h) { h.deleted = true; persist(); }
   document.getElementById('habitActionModal').classList.remove('open');
-  renderAllHabits();
-  renderToday();
-  showToast('Hábito eliminado');
+  renderAllHabits(); renderToday();
+  showToast('Eliminado');
 }
 
-function editHabit(id) {
-  document.getElementById('habitActionModal').classList.remove('open');
-  setTimeout(() => showAddHabit(id), 300);
-}
-
-// ============================================================
-// ADD / EDIT HABIT
-// ============================================================
+// ─── ADD / EDIT HABIT ─────────────────────────────────────────
 function showAddHabit(editId = null) {
-  state.editingHabitId = editId;
-  state.selectedDays = [];
-  state.selectedCat = null;
-  state.reminderOn = false;
+  F.editId = editId;
+  F.freq   = 'frequent';
+  F.days   = [];
+  F.dates  = [];
+  F.cat    = null;
+  F.reminder = false;
+  F.miniCalYear  = new Date().getFullYear();
+  F.miniCalMonth = new Date().getMonth();
 
-  document.getElementById('addHabitTitle').textContent = editId ? 'Editar hábito' : 'Nuevo hábito';
+  document.getElementById('addHabitTitle').textContent = editId ? 'Editar ítem' : 'Nuevo ítem';
   document.getElementById('hName').value = '';
   document.getElementById('hGoalCount').value = '';
   document.getElementById('hGoalLabel').value = '';
@@ -1387,235 +1021,287 @@ function showAddHabit(editId = null) {
   document.getElementById('hReminderTime').value = '20:00';
   document.getElementById('reminderToggle').classList.remove('on');
   document.getElementById('reminderTimeRow').style.display = 'none';
-
-  // Days
-  document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('selected'));
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.freq-btn[data-freq="frequent"]').classList.add('active');
 
   if (editId) {
-    const h = state.habits.find(x => x.id === editId);
+    const h = S.habits.find(x => x.id === editId);
     if (h) {
-      document.getElementById('hName').value = h.name;
-      state.selectedDays = [...h.days];
-      state.selectedCat = h.categoryId;
+      document.getElementById('hName').value = h.name || '';
       document.getElementById('hGoalCount').value = h.goal || '';
       document.getElementById('hGoalLabel').value = h.goalLabel || '';
       document.getElementById('hIntention').value = h.intention || '';
+      F.freq   = h.freq || 'frequent';
+      F.days   = [...(h.days  || [])];
+      F.dates  = [...(h.dates || [])];
+      F.cat    = h.categoryId;
+      F.reminder = !!h.reminder;
       if (h.reminder) {
-        state.reminderOn = true;
         document.getElementById('reminderToggle').classList.add('on');
         document.getElementById('reminderTimeRow').style.display = 'block';
         document.getElementById('hReminderTime').value = h.reminderTime || '20:00';
       }
-      document.querySelectorAll('.day-btn').forEach(btn => {
-        if (h.days.includes(parseInt(btn.dataset.day))) btn.classList.add('selected');
-      });
+      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.freq-btn[data-freq="${F.freq}"]`).classList.add('active');
+      if (F.freq === 'frequent') {
+        document.querySelectorAll('.day-btn').forEach(b => {
+          if (F.days.includes(parseInt(b.dataset.day))) b.classList.add('selected');
+        });
+      }
     }
   }
 
-  // Category selector
   renderHCatSelector();
+  renderFreqConfig();
 
-  // Day buttons
   document.querySelectorAll('.day-btn').forEach(btn => {
     btn.onclick = () => {
-      const day = parseInt(btn.dataset.day);
-      if (state.selectedDays.includes(day)) {
-        state.selectedDays = state.selectedDays.filter(d => d !== day);
-        btn.classList.remove('selected');
-      } else {
-        state.selectedDays.push(day);
-        btn.classList.add('selected');
-      }
+      const d = parseInt(btn.dataset.day);
+      if (F.days.includes(d)) { F.days = F.days.filter(x=>x!==d); btn.classList.remove('selected'); }
+      else { F.days.push(d); btn.classList.add('selected'); }
     };
   });
 
   document.getElementById('addHabitModal').classList.add('open');
 }
 
-function renderHCatSelector() {
-  const sel = document.getElementById('hCatSelector');
-  sel.innerHTML = state.categories.map(cat =>
-    `<div class="cat-btn ${state.selectedCat===cat.id?'selected':''}" onclick="selectHCat('${cat.id}')">
-      <div class="dot" style="background:${cat.color}"></div>${cat.name}
-    </div>`
-  ).join('') + `<div class="cat-btn" onclick="quickAddCat()" style="border-style:dashed">+ Nueva</div>`;
+function selectFreq(freq) {
+  F.freq = freq;
+  document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.freq-btn[data-freq="${freq}"]`).classList.add('active');
+  // Show/hide goal section — only for frequent
+  document.getElementById('goalSection').style.display = freq === 'frequent' ? 'block' : 'none';
+  renderFreqConfig();
 }
 
-function selectHCat(id) {
-  state.selectedCat = id;
-  renderHCatSelector();
-}
-
-function quickAddCat() {
-  // Save current form state so we can restore it after adding category
-  state._pendingHabitForm = {
-    name: document.getElementById('hName').value,
-    days: [...state.selectedDays],
-    goalCount: document.getElementById('hGoalCount').value,
-    goalLabel: document.getElementById('hGoalLabel').value,
-    intention: document.getElementById('hIntention').value,
-    reminderTime: document.getElementById('hReminderTime').value,
-    reminderOn: state.reminderOn,
-    editingHabitId: state.editingHabitId,
-  };
-  document.getElementById('addHabitModal').classList.remove('open');
-  setTimeout(() => showAddCategoryModal(true), 300);
-}
-
-function closeAddHabitModal(e) {
-  if (!e || e.target === document.getElementById('addHabitModal')) {
-    document.getElementById('addHabitModal').classList.remove('open');
+function renderFreqConfig() {
+  const el = document.getElementById('freqConfig');
+  if (F.freq === 'frequent') {
+    el.innerHTML = `<div class="days-selector" style="margin-top:10px">
+      <button class="day-btn ${F.days.includes(0)?'selected':''}" data-day="0">D</button>
+      <button class="day-btn ${F.days.includes(1)?'selected':''}" data-day="1">L</button>
+      <button class="day-btn ${F.days.includes(2)?'selected':''}" data-day="2">M</button>
+      <button class="day-btn ${F.days.includes(3)?'selected':''}" data-day="3">X</button>
+      <button class="day-btn ${F.days.includes(4)?'selected':''}" data-day="4">J</button>
+      <button class="day-btn ${F.days.includes(5)?'selected':''}" data-day="5">V</button>
+      <button class="day-btn ${F.days.includes(6)?'selected':''}" data-day="6">S</button>
+    </div>`;
+    document.querySelectorAll('.day-btn').forEach(btn => {
+      btn.onclick = () => {
+        const d = parseInt(btn.dataset.day);
+        if (F.days.includes(d)) { F.days = F.days.filter(x=>x!==d); btn.classList.remove('selected'); }
+        else { F.days.push(d); btn.classList.add('selected'); }
+      };
+    });
+  } else {
+    // Once or occasional: show mini calendar
+    const multiSelect = F.freq === 'occasional';
+    el.innerHTML = `<div style="margin-top:10px">
+      ${miniCalHTML(multiSelect)}
+      ${F.dates.length > 0 ? `<div class="selected-dates-list">${F.dates.map(ds =>
+        `<div class="date-chip">${ds}<span class="date-chip-remove" onclick="removeDate('${ds}')">×</span></div>`
+      ).join('')}</div>` : ''}
+    </div>`;
   }
 }
 
-function toggleReminder() {
-  state.reminderOn = !state.reminderOn;
-  document.getElementById('reminderToggle').classList.toggle('on', state.reminderOn);
-  document.getElementById('reminderTimeRow').style.display = state.reminderOn ? 'block' : 'none';
+function miniCalHTML(multi) {
+  const year = F.miniCalYear, month = F.miniCalMonth;
+  const firstDow = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const today = todayStr();
+  let html = `<div class="mini-cal">
+    <div class="mini-cal-header">
+      <button class="mini-cal-nav" onclick="miniCalNav(-1)">‹</button>
+      <span class="mini-cal-title">${MONTHS[month]} ${year}</span>
+      <button class="mini-cal-nav" onclick="miniCalNav(1)">›</button>
+    </div>
+    <div class="mini-cal-grid">
+      ${DAYS_SHORT.map(d=>`<div class="mini-cal-weekday">${d}</div>`).join('')}`;
+  for (let i=0;i<firstDow;i++) html += `<div class="mini-cal-day other-month"></div>`;
+  for (let d=1;d<=daysInMonth;d++) {
+    const ds = `${year}-${pad(month+1)}-${pad(d)}`;
+    const isPast = ds < today;
+    const isTod  = ds === today;
+    const isSel  = F.dates.includes(ds);
+    const cls = ['mini-cal-day', isPast?'past':'', isTod?'today-cal':'', isSel?'selected-cal':''].filter(Boolean).join(' ');
+    const click = isPast ? '' : `onclick="selectDate('${ds}',${multi})"`;
+    html += `<div class="${cls}" ${click}>${d}</div>`;
+  }
+  html += `</div></div>`;
+  return html;
+}
+
+function miniCalNav(dir) {
+  F.miniCalMonth += dir;
+  if (F.miniCalMonth > 11) { F.miniCalMonth = 0; F.miniCalYear++; }
+  if (F.miniCalMonth < 0)  { F.miniCalMonth = 11; F.miniCalYear--; }
+  renderFreqConfig();
+}
+
+function selectDate(ds, multi) {
+  if (multi) {
+    if (F.dates.includes(ds)) F.dates = F.dates.filter(x=>x!==ds);
+    else F.dates.push(ds);
+  } else {
+    F.dates = [ds];
+  }
+  renderFreqConfig();
+}
+
+function removeDate(ds) {
+  F.dates = F.dates.filter(x=>x!==ds);
+  renderFreqConfig();
+}
+
+function renderHCatSelector() {
+  document.getElementById('hCatSelector').innerHTML =
+    S.categories.map(cat =>
+      `<div class="cat-btn ${F.cat===cat.id?'selected':''}" onclick="selectCat('${cat.id}')">
+        <div class="dot" style="background:${cat.color}"></div>${cat.name}</div>`
+    ).join('') +
+    `<div class="cat-btn" onclick="quickAddCat()" style="border-style:dashed">+ Nueva</div>`;
+}
+
+function selectCat(id) { F.cat = id; renderHCatSelector(); }
+
+function toggleField(field) {
+  if (field === 'reminder') {
+    F.reminder = !F.reminder;
+    document.getElementById('reminderToggle').classList.toggle('on', F.reminder);
+    document.getElementById('reminderTimeRow').style.display = F.reminder ? 'block' : 'none';
+  }
 }
 
 function saveHabit() {
   const name = document.getElementById('hName').value.trim();
   if (!name) { showToast('Escribí un nombre'); return; }
-  if (state.selectedDays.length === 0) { showToast('Seleccioná al menos un día'); return; }
-  if (!state.selectedCat) { showToast('Seleccioná una categoría'); return; }
+  if (!F.cat) { showToast('Seleccioná una categoría'); return; }
+  if (F.freq === 'frequent' && F.days.length === 0) { showToast('Seleccioná al menos un día'); return; }
+  if ((F.freq === 'once' || F.freq === 'occasional') && F.dates.length === 0) { showToast('Seleccioná al menos una fecha'); return; }
 
-  const goalCount = parseInt(document.getElementById('hGoalCount').value);
-  const goalLabel = document.getElementById('hGoalLabel').value.trim();
-  const intention = document.getElementById('hIntention').value.trim();
-  const reminderTime = document.getElementById('hReminderTime').value;
+  const goalCount = parseInt(document.getElementById('hGoalCount').value) || null;
+  const data = {
+    name,
+    categoryId:   F.cat,
+    freq:         F.freq,
+    days:         F.freq === 'frequent' ? [...F.days] : [],
+    dates:        F.freq !== 'frequent' ? [...F.dates] : [],
+    goal:         F.freq === 'frequent' ? goalCount : null,
+    goalLabel:    document.getElementById('hGoalLabel').value.trim() || null,
+    intention:    document.getElementById('hIntention').value.trim() || null,
+    reminder:     F.reminder,
+    reminderTime: document.getElementById('hReminderTime').value,
+    paused:       false,
+    deleted:      false,
+  };
 
-  if (state.editingHabitId) {
-    const h = state.habits.find(x => x.id === state.editingHabitId);
-    if (h) {
-      h.name = name; h.days = state.selectedDays; h.categoryId = state.selectedCat;
-      h.goal = goalCount || null; h.goalLabel = goalLabel || null;
-      h.intention = intention || null;
-      h.reminder = state.reminderOn; h.reminderTime = reminderTime;
-    }
+  if (F.editId) {
+    const h = S.habits.find(x => x.id === F.editId);
+    if (h) Object.assign(h, data);
   } else {
-    state.habits.push({
-      id: uid(), name, days: state.selectedDays, categoryId: state.selectedCat,
-      goal: goalCount || null, goalLabel: goalLabel || null,
-      intention: intention || null,
-      reminder: state.reminderOn, reminderTime,
-      paused: false, deleted: false,
-      createdAt: todayStr()
-    });
+    S.habits.push({ id: uid(), createdAt: todayStr(), ...data });
   }
-  save();
-  const wasEditing = !!state.editingHabitId;
-  state.editingHabitId = null;
+
+  const wasEdit = !!F.editId;
+  F.editId = null;
+  persist();
   document.getElementById('addHabitModal').classList.remove('open');
-  renderToday();
-  renderAllHabits();
-  showToast(wasEditing ? 'Hábito actualizado' : 'Hábito creado');
+  renderToday(); renderAllHabits();
+  showToast(wasEdit ? 'Actualizado' : 'Creado');
 }
 
-// ============================================================
-// CATEGORIES
-// ============================================================
-let returnToAddHabit = false;
+// ─── QUICK ADD CATEGORY ───────────────────────────────────────
+function quickAddCat() {
+  F.pendingForm = {
+    name:      document.getElementById('hName').value,
+    days:      [...F.days],
+    dates:     [...F.dates],
+    freq:      F.freq,
+    goalCount: document.getElementById('hGoalCount').value,
+    goalLabel: document.getElementById('hGoalLabel').value,
+    intention: document.getElementById('hIntention').value,
+    reminder:  F.reminder,
+    reminderTime: document.getElementById('hReminderTime').value,
+    editId:    F.editId,
+  };
+  F.returnToCat = true;
+  document.getElementById('addHabitModal').classList.remove('open');
+  setTimeout(() => showAddCatModal(), 280);
+}
 
-function showAddCategoryModal(returnToHabit = false) {
-  returnToAddHabit = returnToHabit;
+// ─── CATEGORIES ───────────────────────────────────────────────
+function showAddCatModal(fromHabit=false) {
+  F.returnToCat = fromHabit;
   document.getElementById('catName').value = '';
-  state.selectedColor = CAT_COLORS[0];
+  F.color = CAT_COLORS[0];
   renderColorSwatches();
   document.getElementById('addCatModal').classList.add('open');
 }
 
 function renderColorSwatches() {
   document.getElementById('catColorSwatches').innerHTML = CAT_COLORS.map(c =>
-    `<div class="color-swatch ${state.selectedColor===c?'selected':''}" style="background:${c}" onclick="selectColor('${c}')"></div>`
+    `<div class="color-swatch ${F.color===c?'selected':''}" style="background:${c}" onclick="F.color='${c}';renderColorSwatches()"></div>`
   ).join('');
-}
-
-function selectColor(c) {
-  state.selectedColor = c;
-  renderColorSwatches();
-}
-
-function closeAddCatModal(e) {
-  if (!e || e.target === document.getElementById('addCatModal')) {
-    document.getElementById('addCatModal').classList.remove('open');
-  }
 }
 
 function saveCategory() {
   const name = document.getElementById('catName').value.trim();
   if (!name) { showToast('Escribí un nombre'); return; }
-  state.categories.push({ id: uid(), name, color: state.selectedColor });
-  save();
+  S.categories.push({ id: uid(), name, color: F.color });
+  persist();
   document.getElementById('addCatModal').classList.remove('open');
   showToast('Categoría creada');
-  if (returnToAddHabit) {
+  if (F.returnToCat && F.pendingForm) {
+    const pf = F.pendingForm;
+    F.pendingForm = null;
+    F.returnToCat = false;
     setTimeout(() => {
-      const pending = state._pendingHabitForm;
-      showAddHabit(pending ? pending.editingHabitId : null);
-      // Restore saved form state
-      if (pending) {
-        document.getElementById('hName').value = pending.name || '';
-        document.getElementById('hGoalCount').value = pending.goalCount || '';
-        document.getElementById('hGoalLabel').value = pending.goalLabel || '';
-        document.getElementById('hIntention').value = pending.intention || '';
-        document.getElementById('hReminderTime').value = pending.reminderTime || '20:00';
-        state.selectedDays = pending.days || [];
-        state.reminderOn = pending.reminderOn || false;
-        document.getElementById('reminderToggle').classList.toggle('on', state.reminderOn);
-        document.getElementById('reminderTimeRow').style.display = state.reminderOn ? 'block' : 'none';
-        document.querySelectorAll('.day-btn').forEach(btn => {
-          const day = parseInt(btn.dataset.day);
-          btn.classList.toggle('selected', state.selectedDays.includes(day));
-        });
-        // Auto-select the newly created category
-        state.selectedCat = state.categories[state.categories.length - 1].id;
-        renderHCatSelector();
-        state._pendingHabitForm = null;
-      }
-    }, 300);
+      showAddHabit(pf.editId);
+      document.getElementById('hName').value = pf.name || '';
+      document.getElementById('hGoalCount').value = pf.goalCount || '';
+      document.getElementById('hGoalLabel').value = pf.goalLabel || '';
+      document.getElementById('hIntention').value = pf.intention || '';
+      document.getElementById('hReminderTime').value = pf.reminderTime || '20:00';
+      F.days  = pf.days  || [];
+      F.dates = pf.dates || [];
+      F.freq  = pf.freq  || 'frequent';
+      F.reminder = pf.reminder || false;
+      F.cat = S.categories[S.categories.length-1].id;
+      document.getElementById('reminderToggle').classList.toggle('on', F.reminder);
+      document.getElementById('reminderTimeRow').style.display = F.reminder ? 'block' : 'none';
+      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.freq-btn[data-freq="${F.freq}"]`).classList.add('active');
+      renderHCatSelector();
+      renderFreqConfig();
+    }, 280);
   } else {
     renderAllHabits();
   }
 }
 
-function deleteCategory(id) {
-  const inUse = state.habits.some(h => !h.deleted && h.categoryId === id);
-  if (inUse) { showToast('Hay hábitos con esta categoría'); return; }
-  const cat = state.categories.find(c => c.id === id);
+function deleteCat(id) {
+  if (S.habits.some(h => !h.deleted && h.categoryId === id)) { showToast('Hay ítems con esta categoría'); return; }
+  const cat = S.categories.find(c => c.id === id);
   if (!cat) return;
-  // Show inline confirmation as toast-style overlay
-  const existing = document.getElementById('catDeleteConfirm');
-  if (existing) existing.remove();
   const div = document.createElement('div');
-  div.id = 'catDeleteConfirm';
-  div.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px';
-  div.innerHTML = `<div style="background:white;border-radius:20px;padding:28px 24px;max-width:320px;width:100%;text-align:center">
-    <div style="font-size:1.3rem;margin-bottom:10px">🏷️</div>
-    <div style="font-weight:500;margin-bottom:6px">¿Eliminar "${cat.name}"?</div>
-    <div style="font-size:0.83rem;color:var(--text-muted);margin-bottom:20px">Esta categoría no tiene hábitos asociados.</div>
-    <button class="btn-danger" style="margin-top:0" onclick="doCatDelete('${id}')">Eliminar</button>
-    <button class="btn-secondary" onclick="document.getElementById('catDeleteConfirm').remove()">Cancelar</button>
+  div.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:400;display:flex;align-items:center;justify-content:center;padding:20px';
+  div.innerHTML = `<div style="background:white;border-radius:20px;padding:26px 22px;max-width:310px;width:100%;text-align:center">
+    <div style="font-size:1.2rem;margin-bottom:8px">🏷️</div>
+    <div style="font-weight:500;margin-bottom:5px">¿Eliminar "${cat.name}"?</div>
+    <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:18px">Sin ítems asociados.</div>
+    <button class="btn-danger" style="margin-top:0" onclick="doCatDelete('${id}',this.closest('div[style]'))">Eliminar</button>
+    <button class="btn-secondary" onclick="this.closest('div[style]').remove()">Cancelar</button>
   </div>`;
   document.body.appendChild(div);
 }
 
-function doCatDelete(id) {
-  document.getElementById('catDeleteConfirm')?.remove();
-  state.categories = state.categories.filter(c => c.id !== id);
-  save(); renderAllHabits();
+function doCatDelete(id, overlay) {
+  S.categories = S.categories.filter(c => c.id !== id);
+  persist(); overlay.remove(); renderAllHabits();
   showToast('Categoría eliminada');
 }
-
-// ============================================================
-// ONBOARDING CAT SELECTOR
-// ============================================================
-document.addEventListener('click', e => {
-  const btn = e.target.closest('#ob-cats .cat-btn');
-  if (btn) {
-    btn.classList.toggle('selected');
-  }
-});
 </script>
 </body>
 </html>
