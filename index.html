@@ -515,8 +515,42 @@ let F = {
 let analysisPeriod = 7;
 
 function persist() { localStorage.setItem('habitus_v2', JSON.stringify(S)); }
+
 function hydrate() {
-  try { const d = localStorage.getItem('habitus_v2'); if (d) S = JSON.parse(d); } catch(e){}
+  try {
+    // Try loading v2 first
+    const d2 = localStorage.getItem('habitus_v2');
+    if (d2) { S = JSON.parse(d2); return; }
+
+    // No v2 found — check if v1 exists and migrate
+    const d1 = localStorage.getItem('habitus_v1');
+    if (!d1) return;
+
+    const old = JSON.parse(d1);
+
+    // Migrate habits: v1 used days[] for weekdays, no freq field
+    const migratedHabits = (old.habits || []).map(h => ({
+      ...h,
+      freq:  'frequent',
+      dates: [],
+      days:  Array.isArray(h.days) ? h.days : [],
+    }));
+
+    S = {
+      habits:       migratedHabits,
+      categories:   old.categories   || [],
+      completions:  old.completions  || {},
+      achievements: old.achievements || [],
+      onboarded:    old.onboarded    || false,
+      calFilter:    'all',
+      calYear:      new Date().getFullYear(),
+      calMonth:     new Date().getMonth(),
+    };
+
+    // Save as v2 and remove v1 so migration only runs once
+    persist();
+    localStorage.removeItem('habitus_v1');
+  } catch(e) { console.warn('Habitus hydrate error:', e); }
 }
 
 // ─── UTILS ───────────────────────────────────────────────────
