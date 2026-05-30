@@ -61,7 +61,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .section-title { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; padding-left: 2px; }
 
 /* HABIT CARD */
-.habit-card { background: var(--surface); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); cursor: pointer; transition: transform 0.15s; }
+.habit-card { background: var(--surface); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); cursor: pointer; transition: transform 0.15s; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .habit-card:active { transform: scale(0.98); }
 .habit-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .habit-check.done { background: var(--sage); border-color: var(--sage); }
@@ -658,6 +658,7 @@ function getStreak(h) {
 // ─── BOOT ────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   hydrate();
+  initTodayGestures();
   setTimeout(() => {
     document.getElementById('splash').style.opacity = '0';
     setTimeout(() => {
@@ -751,7 +752,7 @@ function renderToday() {
     const goalHtml = h.goal ? `<span style="color:var(--indigo);font-size:0.7rem">${getGoalProgress(h)}/${h.goal}</span>` : '';
     const streak = getStreak(h);
     const streakHtml = streak > 1 ? `<span style="color:#E8855A;font-size:0.7rem;font-weight:500">🔥 ${streak}</span>` : '';
-    return `<div class="habit-card" onclick="toggleItem('${h.id}')">
+    return `<div class="habit-card" data-id="${h.id}">
       <div class="habit-check ${isDone?'done':''}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
       </div>
@@ -780,6 +781,45 @@ function toggleItem(id) {
     if (h && h.goal && getGoalProgress(h) >= h.goal) checkAchievement(h);
   }
   renderToday();
+}
+
+// Gestos en la vista Hoy: toque = marcar; pulsación larga = menú Editar/Pausar/Eliminar
+function initTodayGestures() {
+  const list = document.getElementById('todayList');
+  if (!list || list.dataset.gestures) return;
+  list.dataset.gestures = '1';
+  let timer = null, fired = false, sx = 0, sy = 0;
+  const cancel = () => { clearTimeout(timer); timer = null; };
+  list.addEventListener('pointerdown', e => {
+    const card = e.target.closest('.habit-card[data-id]');
+    if (!card) return;
+    fired = false; sx = e.clientX; sy = e.clientY;
+    timer = setTimeout(() => {
+      fired = true;
+      if (navigator.vibrate) navigator.vibrate(15);
+      suppressNextClick();                 // evita que el toque posterior toque algo del menú
+      openHabitAction(card.dataset.id);
+    }, 500);
+  });
+  list.addEventListener('pointermove', e => {
+    if (timer && (Math.abs(e.clientX - sx) > 10 || Math.abs(e.clientY - sy) > 10)) cancel();
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => list.addEventListener(ev, cancel));
+  list.addEventListener('click', e => {
+    const card = e.target.closest('.habit-card[data-id]');
+    if (!card) return;
+    if (fired) { fired = false; return; }  // ya lo manejó la pulsación larga
+    toggleItem(card.dataset.id);
+  });
+  list.addEventListener('contextmenu', e => { if (e.target.closest('.habit-card[data-id]')) e.preventDefault(); });
+}
+
+// Consume el próximo click (tras una pulsación larga) para que no active nada por accidente
+function suppressNextClick() {
+  const handler = (ev) => { ev.stopPropagation(); ev.preventDefault(); cleanup(); };
+  const cleanup = () => { document.removeEventListener('click', handler, true); clearTimeout(t); };
+  const t = setTimeout(cleanup, 700);
+  document.addEventListener('click', handler, true);
 }
 
 // Marcar/desmarcar un ítem en CUALQUIER día pasado o de hoy (desde el calendario)
